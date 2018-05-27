@@ -7,6 +7,8 @@ namespace Shop.Model.Models
     public class Footer
     {
         [Key]
+        [MaxLength(250)]
+        [Column(TypeName = "varchar")]
         public string ID { get; set; }
 
         [Required]

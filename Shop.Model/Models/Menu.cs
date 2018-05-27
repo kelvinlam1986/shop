@@ -8,21 +8,26 @@ namespace Shop.Model.Models
     public class Menu : Switchable
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]
+        [MaxLength(250)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(500)]
         public string Url { get; set; }
 
         public int? DisplayOrder { get; set; }
 
-        public int GroupID { get; set; }
+        public int? GroupID { get; set; }
 
         [ForeignKey("GroupID")]
         public virtual MenuGroup MenuGroup { get; set; }
 
+        [Column(TypeName = "varchar")]
+        [MaxLength(10)]
         public string Target { get; set; }
             
     }

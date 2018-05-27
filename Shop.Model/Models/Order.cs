@@ -1,5 +1,6 @@
 ﻿using Shop.Model.Abstract;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,6 +10,7 @@ namespace Shop.Model.Models
     public class Order : Switchable
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [Required]
         public string CustomerName { get; set; }
@@ -22,6 +24,8 @@ namespace Shop.Model.Models
         public string PaymentMethod { get; set; }
         [Required]
         public string PaymentStatus { get; set; }
+
+        public virtual IEnumerable<OrderDetail> OrderDetails { get; set; }
 
     }
 }
