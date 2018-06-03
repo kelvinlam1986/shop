@@ -8,12 +8,16 @@ namespace Shop.Model.Models
     {
         [Key, Column(Order = 0)]
         public int OrderID { get; set; }
+
         [Key, Column(Order = 1)]
         public int ProductID { get; set; }
+
         public int? Quantity { get; set; }
+
         [ForeignKey("OrderID")]
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
+
         [ForeignKey("ProductID")]
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

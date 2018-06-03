@@ -13,13 +13,20 @@ namespace Shop.Model.Models
     public class Slide : Switchable
     {
         [Key]     
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+
         [Required]
+        [MaxLength(256)]
         public string Name { get; set; }
         public string Description { get; set; }
+
         [Required]
+        [MaxLength(256)]
         public string Image { get; set; }
+
         [Required]
+        [MaxLength(256)]
         public string Url { get; set; }
         public int? DisplayOrder { get; set; }
     }

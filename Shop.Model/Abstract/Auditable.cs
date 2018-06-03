@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Model.Abstract
 {
@@ -7,12 +8,14 @@ namespace Shop.Model.Abstract
     {
         public DateTime? CreatedDate { get; set; }
 
-        [MaxLength(256)]
+        [MaxLength(50)]
+        [Column(TypeName = "varchar")]
         public string CreatedBy { get; set; }
 
         public DateTime? UpdatedDate { get; set; }
 
-        [MaxLength(256)]
+        [MaxLength(50)]
+        [Column(TypeName = "varchar")]
         public string UpdatedBy { get; set; }
 
         [MaxLength(256)]

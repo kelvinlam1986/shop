@@ -29,6 +29,5 @@ namespace Shop.Model.Models
         [Column(TypeName = "varchar")]
         [MaxLength(10)]
         public string Target { get; set; }
-            
     }
 }
