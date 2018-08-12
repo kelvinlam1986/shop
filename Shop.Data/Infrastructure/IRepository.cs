@@ -14,6 +14,9 @@ namespace Shop.Data.Infrastructure
         T GetSingleByCondition(Expression<Func<T, bool>> where, string[] includes = null);
         IQueryable<T> GetAll(string[] includes = null);
         IQueryable<T> GetMulti(Expression<Func<T, bool>> where, string[] includes = null);
+        IQueryable<T> GetMultiPaging(Expression<Func<T, bool>> filter, out int total, int index = 0, int size = 50, string[] includes = null);
+        int Count(Expression<Func<T, bool>> where);
+        bool CheckContains(Expression<Func<T, bool>> predicate);
 
     }
 }
