@@ -10,8 +10,7 @@ namespace Shop.Model.Models
         public int ProductID { get; set; }
 
         [Key, Column(Order = 2, TypeName = "varchar")]
-        [MaxLength(50)]
-        public int TagID { get; set; }
+        public string TagID { get; set; }
 
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }

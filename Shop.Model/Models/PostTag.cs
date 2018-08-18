@@ -10,8 +10,7 @@ namespace Shop.Model.Models
         public int PostID { get; set; }
 
         [Key, Column(Order = 2, TypeName = "varchar")]
-        [MaxLength(50)]
-        public int TagID { get; set; }
+        public string TagID { get; set; }
 
         [ForeignKey("PostID")]
         public virtual Post Post { get; set; }
