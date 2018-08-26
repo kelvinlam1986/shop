@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Shop.Data.Repositories;
 using Shop.Data.Infrastructure;
+using System;
 
 namespace Shop.Service
 {
@@ -12,6 +13,9 @@ namespace Shop.Service
         void Delete(int id);
         IEnumerable<Post> GetAll();
         IEnumerable<Post> GetAllPaging(int page, int pageSize, out int totalRow);
+
+        IEnumerable<Post> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow);
+
         IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow);
         Post GetById(int id);
         void SaveChanges();
@@ -41,6 +45,11 @@ namespace Shop.Service
         public IEnumerable<Post> GetAll()
         {
             return this._postRepository.GetAll(new string[] { "PostCategory" });
+        }
+
+        public IEnumerable<Post> GetAllByCategoryPaging(int categoryId, int page, int pageSize, out int totalRow)
+        {
+            return this._postRepository.GetMultiPaging(x => x.Status && x.CategoryID == categoryId, out totalRow, page, pageSize, new string[] { "PostCategory" });
         }
 
         public IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pageSize, out int totalRow)
