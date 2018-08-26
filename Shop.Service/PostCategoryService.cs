@@ -11,9 +11,9 @@ namespace Shop.Service
 {
     public interface IPostCategoryService
     {
-        void Add(PostCategory postCategory);
+        PostCategory Add(PostCategory postCategory);
         void Update(PostCategory postCategory);
-        void Delete(int id);
+        PostCategory Delete(int id);
         IEnumerable<PostCategory> GetAll();
         IEnumerable<PostCategory> GetAllByParentId(int parentId);
         PostCategory GetById(int id);
@@ -32,14 +32,14 @@ namespace Shop.Service
         }
             
 
-        public void Add(PostCategory postCategory)
+        public PostCategory Add(PostCategory postCategory)
         {
-            this._postCategoryRepositry.Add(postCategory);
+            return this._postCategoryRepositry.Add(postCategory);
         }
 
-        public void Delete(int id)
+        public PostCategory Delete(int id)
         {
-            this._postCategoryRepositry.Delete(id);
+            return this._postCategoryRepositry.Delete(id);
         }
 
         public IEnumerable<PostCategory> GetAll()

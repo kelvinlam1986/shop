@@ -8,9 +8,9 @@ namespace Shop.Service
 {
     public interface IPostService
     {
-        void Add(Post post);
+        Post Add(Post post);
         void Update(Post post);
-        void Delete(int id);
+        Post Delete(int id);
         IEnumerable<Post> GetAll();
         IEnumerable<Post> GetAllPaging(int page, int pageSize, out int totalRow);
 
@@ -32,14 +32,14 @@ namespace Shop.Service
             this._unitOfWork = unitOfWork;
         }
 
-        public void Add(Post post)
+        public Post Add(Post post)
         {
-            this._postRepository.Add(post);
+            return this._postRepository.Add(post);
         }
 
-        public void Delete(int id)
+        public Post Delete(int id)
         {
-            this._postRepository.Delete(id);
+            return this._postRepository.Delete(id);
         }
 
         public IEnumerable<Post> GetAll()
