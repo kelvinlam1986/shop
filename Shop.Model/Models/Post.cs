@@ -38,5 +38,6 @@ namespace Shop.Model.Models
         public bool? HomeFlag { get; set; }
         public bool? HotFlag { get; set; }
         public int? ViewCount { get; set; }
+        public virtual IEnumerable<PostTag> PostTags { get; set; }
     }
 }

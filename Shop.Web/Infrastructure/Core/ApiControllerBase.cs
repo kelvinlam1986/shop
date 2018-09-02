@@ -1,4 +1,5 @@
-﻿using Shop.Model.Models;
+﻿using AutoMapper;
+using Shop.Model.Models;
 using Shop.Service;
 using System;
 using System.Data.Entity.Infrastructure;
@@ -13,11 +14,15 @@ namespace Shop.Web.Infrastructure.Core
     public class ApiControllerBase : ApiController
     {
         private IErrorService _errorService;
+        private IMapper _mapper;
 
-        public ApiControllerBase(IErrorService errorService)
+        public ApiControllerBase(IErrorService errorService, IMapper mapper)
         {
             this._errorService = errorService;
+            _mapper = mapper;
         }
+
+        public IMapper Mapper { get { return _mapper; } }
 
         protected HttpResponseMessage CreateHttpResponse(HttpRequestMessage requestMessage, Func<HttpResponseMessage> func)
         {

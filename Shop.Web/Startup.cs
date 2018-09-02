@@ -11,6 +11,10 @@ using Shop.Service;
 using System.Web.Mvc;
 using System.Web.Http;
 using Autofac.Integration.WebApi;
+using AutoMapper;
+using Shop.Model.Models;
+using Shop.Web.Models;
+using Shop.Web.Mappings;
 
 [assembly: OwinStartup(typeof(Shop.Web.Startup))]
 
@@ -31,6 +35,10 @@ namespace Shop.Web
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
             builder.RegisterType<ShopContext>().AsSelf().InstancePerRequest();
+
+            //var mapper = config.CreateMapper();
+            var mapper = new AutoMapperConfiguration().Configure();
+            builder.RegisterInstance(mapper).SingleInstance();
 
             // Repositories
             builder.RegisterAssemblyTypes(typeof(PostCategoryRepository).Assembly)
