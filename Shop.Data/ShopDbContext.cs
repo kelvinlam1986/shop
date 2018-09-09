@@ -1,11 +1,12 @@
-﻿using Shop.Model.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Shop.Model.Models;
 using System.Data.Entity;
 
 namespace Shop.Data
 {
-    public class ShopDbContext : DbContext
+    public class ShopDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ShopDbContext() : base("ShopConnectionString")
+        public ShopDbContext() : base("Shop")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -27,6 +28,12 @@ namespace Shop.Data
         public DbSet<SystemConfig> SystemConfigs { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public DbSet<Error> Errors { get; set; }
+
+        public static ShopDbContext Create()
+        {
+            return new ShopDbContext();
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
