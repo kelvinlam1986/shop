@@ -15,16 +15,23 @@ using AutoMapper;
 using Shop.Model.Models;
 using Shop.Web.Models;
 using Shop.Web.Mappings;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using System.Web;
+using Microsoft.Owin.Security.DataProtection;
+using Shop.Data;
 
 [assembly: OwinStartup(typeof(Shop.Web.Startup))]
 
 namespace Shop.Web
 {
-    public class Startup
+    public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {
             ConfigAutofac(app);
+            ConfigureAuth(app);
         }
 
         private void ConfigAutofac(IAppBuilder app)
@@ -34,7 +41,15 @@ namespace Shop.Web
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
-            builder.RegisterType<ShopContext>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ShopDbContext>().AsSelf().InstancePerRequest();
+
+            // Asp.net Identity
+            builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
+            builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
+            builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
+            builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
+            builder.Register(c => app.GetDataProtectionProvider()).InstancePerRequest();
+
 
             //var mapper = config.CreateMapper();
             var mapper = new AutoMapperConfiguration().Configure();

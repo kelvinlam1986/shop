@@ -1,5 +1,8 @@
 namespace Shop.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Model.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,10 +17,25 @@ namespace Shop.Data.Migrations
 
         protected override void Seed(Shop.Data.ShopDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ShopDbContext()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ShopDbContext()));
+            var user = new ApplicationUser
+            {
+                UserName = "admin",
+                Email = "kelvincoder@gmail.com",
+                BirthDate = new DateTime(1986, 10, 10),
+                FullName = "Lam Su Minh",
+            };
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            userManager.Create(user, "12345678x@X");
+            if (!roleManager.Roles.Any())
+            {
+                roleManager.Create(new IdentityRole("User"));
+                roleManager.Create(new IdentityRole("Admin"));
+            }
+
+            var adminUser = userManager.FindByEmail("kelvincoder@gmail.com");
+            userManager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
         }
     }
 }
