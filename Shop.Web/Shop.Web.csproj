@@ -221,6 +221,7 @@
   <ItemGroup>
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\PostCategoryController.cs" />
+    <Compile Include="Api\ProductCategoryController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -238,6 +239,9 @@
     <Compile Include="Models\PostCategoryViewModel.cs" />
     <Compile Include="Models\PostTagViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
+    <Compile Include="Models\ProductCategoryViewModel.cs" />
+    <Compile Include="Models\ProductTagViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -246,14 +250,18 @@
     <Content Include="app\app.js" />
     <Content Include="app\components\home\homeController.js" />
     <Content Include="app\components\home\homeView.html" />
-    <Content Include="app\components\products\product.module.js" />
+    <Content Include="app\components\products\products.module.js" />
     <Content Include="app\components\products\productAddController.js" />
     <Content Include="app\components\products\productAddView.html" />
     <Content Include="app\components\products\productEditController.js" />
     <Content Include="app\components\products\productEditView.html" />
     <Content Include="app\components\products\productListController.js" />
     <Content Include="app\components\products\productListView.html" />
+    <Content Include="app\components\product_categories\productCategories.module.js" />
+    <Content Include="app\components\product_categories\productCategoryListView.html" />
+    <Content Include="app\components\product_categories\productCategoryListController.js" />
     <Content Include="app\shared\modules\shop.common.js" />
+    <Content Include="app\shared\services\apiService.js" />
     <Content Include="Assets\admin\css\AdminLTE.css" />
     <Content Include="Assets\admin\css\AdminLTE.min.css" />
     <Content Include="Assets\admin\css\alt\AdminLTE-bootstrap-social.css" />
@@ -318,6 +326,8 @@
     <Content Include="Assets\admin\img\user8-128x128.jpg" />
     <Content Include="Assets\admin\js\adminlte.js" />
     <Content Include="Assets\admin\js\adminlte.min.js" />
+    <Content Include="Assets\admin\js\app.js" />
+    <Content Include="Assets\admin\js\app.min.js" />
     <Content Include="Assets\admin\js\demo.js" />
     <Content Include="Assets\admin\js\pages\dashboard.js" />
     <Content Include="Assets\admin\js\pages\dashboard2.js" />
@@ -1846,6 +1856,26 @@
     <Content Include="Assets\admin\libs\jquery\src\var\support.js" />
     <Content Include="Assets\admin\libs\jquery\src\var\toString.js" />
     <Content Include="Assets\admin\libs\jquery\src\wrap.js" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\allow-page-scroll.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\chaining.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\disable-fade-out.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\dynamic-content.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\height-width.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\index.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\libs\prettify\prettify.css" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\libs\prettify\prettify.js" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\mouse-wheel.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\multiple-elements.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\navigation.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\nested.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\programmatic-scrolling.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\rail.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\scroll-events.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\scrollbar.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\start-position.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\style.css" />
+    <Content Include="Assets\admin\libs\slimScroll\jquery.slimscroll.js" />
+    <Content Include="Assets\admin\libs\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -1866,7 +1896,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\components\orders\" />
-    <Folder Include="app\components\product_categories\" />
     <Folder Include="app\components\roles\" />
     <Folder Include="app\components\users\" />
     <Folder Include="app\shared\directive\" />
@@ -2108,6 +2137,11 @@
     <Content Include="Assets\admin\libs\jquery\external\sizzle\dist\sizzle.min.map" />
     <Content Include="Assets\admin\libs\jquery\README.md" />
     <Content Include="Assets\admin\libs\jquery\src\.eslintrc.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\admin\libs\slimScroll\.bower.json" />
+    <Content Include="Assets\admin\libs\slimScroll\package.json" />
+    <Content Include="Assets\admin\libs\slimScroll\README.md" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

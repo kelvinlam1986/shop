@@ -204,11 +204,11 @@
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+                            <i class="fa fa-dashboard"></i> <span>Sản phẩm</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a ui-sref="products"><i class="fa fa-circle-o"></i> Products</a></li>
-                            <li><a ui-sref="product_add"><i class="fa fa-circle-o"></i> Add products</a></li>
+                            <li><a ui-sref="product_categories"><i class="fa fa-circle-o"></i> Loại sản phẩm</a></li>
+                            <li><a ui-sref="products"><i class="fa fa-circle-o"></i> Sản phẩm</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -521,11 +521,14 @@
     <script src="~/Assets/admin/libs/angular/angular.js"></script>
     <script src="~/Assets/admin/libs/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="~/app/shared/modules/shop.common.js"></script>
+    <script src="~/app/shared/services/apiService.js"></script>
     <script src="~/app/components/products/products.module.js"></script>
+    <script src="~/app/components/product_categories/productCategories.module.js"></script>
     <script src="~/app/app.js"></script>
     <script src="~/app/components/products/productAddController.js"></script>
     <script src="~/app/components/products/productListController.js"></script>
     <script src="~/app/components/home/homeController.js"></script>
+    <script src="~/app/components/product_categories/productCategoryListController.js"></script>
 
 </body>
 </html>

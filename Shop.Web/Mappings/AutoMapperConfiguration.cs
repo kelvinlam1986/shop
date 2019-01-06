@@ -14,6 +14,9 @@ namespace Shop.Web.Mappings
                         cfg.CreateMap<PostCategory, PostCategoryViewModel>();
                         cfg.CreateMap<Post, PostViewModel>();
                         cfg.CreateMap<Tag, TagViewModel>();
+                        cfg.CreateMap<ProductCategory, ProductCategoryViewModel>();
+                        cfg.CreateMap<Product, ProductViewModel>();
+                        cfg.CreateMap<ProductTag, ProductTagViewModel>();
                     }
                 );
 

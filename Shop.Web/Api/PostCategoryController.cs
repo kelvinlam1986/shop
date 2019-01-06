@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace Shop.Web.Api
 {
-    [RoutePrefix("/api/postcategory")]
+    [RoutePrefix("api/postcategory")]
     public class PostCategoryController : ApiControllerBase
     {
         private IPostCategoryService _postCategoryService;
@@ -23,6 +23,7 @@ namespace Shop.Web.Api
             this._postCategoryService = postCategoryService;
         }
 
+        [Route("getall")]
         public HttpResponseMessage Get(HttpRequestMessage request)
         {
             return CreateHttpResponse(request, () =>
@@ -42,6 +43,7 @@ namespace Shop.Web.Api
             });
         }
 
+        [Route("add")]
         public HttpResponseMessage Post(HttpRequestMessage request, PostCategoryViewModel postCategoryVM)
         {
             return CreateHttpResponse(request, () =>
@@ -62,6 +64,7 @@ namespace Shop.Web.Api
             });
         }
 
+        [Route("update")]
         public HttpResponseMessage Put(HttpRequestMessage request, PostCategoryViewModel postCategoryVM)
         {
             return CreateHttpResponse(request, () =>

@@ -1,9 +1,10 @@
-namespace Shop.Data.Migrations
+﻿namespace Shop.Data.Migrations
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Model.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -36,6 +37,17 @@ namespace Shop.Data.Migrations
 
             var adminUser = userManager.FindByEmail("kelvincoder@gmail.com");
             userManager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
+
+            if (!context.ProductCategories.Any())
+            {
+                var productCategoryList = new List<ProductCategory>();
+                productCategoryList.Add(new ProductCategory { Name = "Điện lạnh", Alias = "dien-lanh", Status = true });
+                productCategoryList.Add(new ProductCategory { Name = "Viễn thông", Alias = "vien-thong", Status = true });
+                productCategoryList.Add(new ProductCategory { Name = "Đồ gia dụng", Alias = "do-gia-dung", Status = true });
+                productCategoryList.Add(new ProductCategory { Name = "Mỹ phẩm", Alias = "my-pham", Status = true });
+                context.ProductCategories.AddRange(productCategoryList);
+                context.SaveChanges();
+            }
         }
     }
 }
