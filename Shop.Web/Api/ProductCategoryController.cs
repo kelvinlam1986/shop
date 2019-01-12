@@ -8,6 +8,7 @@ using Shop.Service;
 using Shop.Model.Models;
 using Shop.Web.Models;
 using System.Web.Http;
+using System;
 
 namespace Shop.Web.Api
 {
@@ -22,7 +23,7 @@ namespace Shop.Web.Api
         }
 
         [Route("getall")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
             {
@@ -33,9 +34,24 @@ namespace Shop.Web.Api
                 }
                 else
                 {
-                    var listProductCategory = _productCategoryService.GetAll().ToList();
-                    var listProductCategoryVM = Mapper.Map<List<ProductCategory>, List<ProductCategoryViewModel>>(listProductCategory);
-                    response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryVM);
+                    int totalRow = 0;
+                    var listProductCategory = _productCategoryService.GetAll();
+                    totalRow = listProductCategory.Count();
+                    var listProductCategoryPaged =
+                        listProductCategory
+                            .OrderByDescending(x => x.CreatedDate)
+                            .Skip(page * pageSize)
+                            .Take(pageSize);
+                    var listProductCategoryVM = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(listProductCategoryPaged);
+                    var paginationSet = new PaginationSet<ProductCategoryViewModel>
+                    {
+                        Items = listProductCategoryVM,
+                        Page = page,
+                        TotalCount = totalRow,
+                        TotalPages = (int)Math.Ceiling((decimal)(totalRow / pageSize))
+                    };
+
+                    response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 }
                 return response;
             });
