@@ -23,36 +23,29 @@ namespace Shop.Web.Api
         }
 
         [Route("getall")]
-        public HttpResponseMessage GetAll(HttpRequestMessage request, int page, int pageSize = 20)
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword = "", int page = 0, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
-                if (!ModelState.IsValid)
+                int totalRow = 0;
+                var listProductCategory = _productCategoryService.GetAll(keyword);
+                totalRow = listProductCategory.Count();
+                var listProductCategoryPaged =
+                    listProductCategory
+                        .OrderByDescending(x => x.CreatedDate)
+                        .Skip(page * pageSize)
+                        .Take(pageSize);
+                var listProductCategoryVM = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(listProductCategoryPaged);
+                var paginationSet = new PaginationSet<ProductCategoryViewModel>
                 {
-                    request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-                }
-                else
-                {
-                    int totalRow = 0;
-                    var listProductCategory = _productCategoryService.GetAll();
-                    totalRow = listProductCategory.Count();
-                    var listProductCategoryPaged =
-                        listProductCategory
-                            .OrderByDescending(x => x.CreatedDate)
-                            .Skip(page * pageSize)
-                            .Take(pageSize);
-                    var listProductCategoryVM = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(listProductCategoryPaged);
-                    var paginationSet = new PaginationSet<ProductCategoryViewModel>
-                    {
-                        Items = listProductCategoryVM,
-                        Page = page,
-                        TotalCount = totalRow,
-                        TotalPages = (int)Math.Ceiling((decimal)(totalRow / pageSize))
-                    };
+                    Items = listProductCategoryVM,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)(totalRow / pageSize))
+                };
 
-                    response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
-                }
+                response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
             });
         }
