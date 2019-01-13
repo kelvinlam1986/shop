@@ -15,7 +15,6 @@
                     };
 
                     $scope.range = function () {
-                        console.log('$scopt.pagesCount', $scope.pagesCount)
                         if (!$scope.pagesCount) { return []; }
                         var step = 2;
                         var doubleStep = step * 2;

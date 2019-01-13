@@ -9,6 +9,7 @@ using Shop.Model.Models;
 using Shop.Web.Models;
 using System.Web.Http;
 using System;
+using Shop.Web.Infrastructure.Extensions;
 
 namespace Shop.Web.Api
 {
@@ -23,6 +24,7 @@ namespace Shop.Web.Api
         }
 
         [Route("getall")]
+        [HttpGet]
         public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword = "", int page = 0, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
@@ -46,6 +48,45 @@ namespace Shop.Web.Api
                 };
 
                 response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+                return response;
+            });
+        }
+
+        [Route("getallparents")]
+        [HttpGet]
+        public HttpResponseMessage GetAllParents(HttpRequestMessage request)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                var listProductCategory = _productCategoryService.GetAll();
+                var listProductCategoryVM = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(listProductCategory);
+                response = request.CreateResponse(HttpStatusCode.OK, listProductCategoryVM);
+                return response;
+            });
+        }
+
+        [Route("create")]
+        [HttpPost]
+        public HttpResponseMessage Create(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var newProductCategory = new ProductCategory();
+                    newProductCategory.UpdateProductCategory(productCategoryVm);
+                    _productCategoryService.Add(newProductCategory);
+                    _productCategoryService.SaveChanges();
+                    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(newProductCategory);
+                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                }
+               
                 return response;
             });
         }

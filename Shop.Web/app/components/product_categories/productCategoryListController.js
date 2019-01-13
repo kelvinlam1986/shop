@@ -27,8 +27,6 @@
             apiService.get('/api/productcategory/getall', config, function (result) {
                 if (result.data.TotalCount == 0) {
                     notificationService.displaySuccess('Không có bảng ghi nào được tìm thấy');
-                } else {
-                    notificationService.displaySuccess('Tìm thấy ' + result.data.TotalCount + ' bảng ghi');
                 }
 
                 $scope.productCategories = result.data.Items;
