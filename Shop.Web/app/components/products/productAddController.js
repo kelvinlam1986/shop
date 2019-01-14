@@ -20,6 +20,16 @@
 
         $scope.addProduct = addProduct;
         $scope.getSeoTitle = getSeoTitle;
+        $scope.chooseImage = chooseImage;
+
+        function chooseImage() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl, data) {
+                $scope.product.Image = fileUrl;
+            };
+
+            finder.popup();
+        }
 
         function addProduct() {
             apiService.post('/api/product/create', $scope.product,
@@ -38,7 +48,6 @@
         function loadProductCategories() {
             apiService.get('/api/productcategory/getallparents', null, function (result) {
                 $scope.categories = result.data;
-                console.log("categories", $scope.categories);
             }, function (err) {
                 console.log('Can not load product category list');
             })
