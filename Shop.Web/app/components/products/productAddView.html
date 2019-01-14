@@ -1,1 +1,126 @@
-﻿<h1>Product Add</h1>
+﻿ <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Thêm mới sản phẩm
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li>Sản phẩm</li>
+        <li><a ui-sref="products">Sản phẩm</a></li>
+        <li class="active">Thêm mới</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm mới</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" novalidate name="frmAddProductCategory" role="form" ng-submit="addProductCategory()">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Tên danh mục</label>
+                    <div class="col-sm-10">
+                        <input type="text" required ng-maxlength="256" class="form-control" name="name" ng-change="getSeoTitle()" ng-model="productCategory.Name" id="inputName" placeholder="Tên danh mục">
+                        <span ng-show="frmAddProductCategory.name.$invalid && frmAddProductCategory.name.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.name.$error.required">Phải nhập tên danh mục</span>
+                            <span ng-show="frmAddProductCategory.name.$error.maxlength">Tên danh mục không được vượt quá 256 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAlias" class="col-sm-2 control-label">Tiêu đề SEO</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" required ng-maxlength="256" name="alias" ng-model="productCategory.Alias" id="inputAlias" placeholder="Tiêu đề SEO">
+                        <span ng-show="frmAddProductCategory.alias.$invalid && frmAddProductCategory.alias.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.alias.$error.required">Phải nhập tiêu đề SEO</span>
+                            <span ng-show="frmAddProductCategory.alias.$error.maxlength">Tiêu đề SEO không được vượt quá 256 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription" class="col-sm-2 control-label">Mô tả</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-maxlength="500" ng-model="productCategory.Description" name="description" id="inputDescription" placeholder="Mô tả">
+                        <span ng-show="frmAddProductCategory.description.$invalid && frmAddProductCategory.description.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.description.$error.maxlength">Mô tả không được vượt quá 500 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputParentId" class="col-sm-2 control-label">Danh mục cha</label>
+                    <div class="col-sm-10">
+                        <select name="parentId" id="inputParentId"
+                                class="form-control"
+                                ng-model="productCategory.ParentID"
+                                ng-options="option.ID as option.Name for option in parentCategories">
+                            <option value="">Danh mục gốc</option>
+                        </select>
+                        <input name="parentId" type="hidden" ng-model="productCategory.ParentID" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDisplayOrder" class="col-sm-2 control-label">Thứ tự</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" required name="displayOrder" ng-model="productCategory.DisplayOrder" id="inputDisplayOrder" placeholder="Thứ tự">
+                        <span ng-show="frmAddProductCategory.displayOrder.$invalid && frmAddProductCategory.displayOrder.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.displayOrder.$error.required">Phải nhập thứ tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputImage" class="col-sm-2 control-label">Hình ảnh</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="productCategory.Image" id="inputImage" placeholder="Hình ảnh">
+                        <span ng-show="frmAddProductCategory.image.$invalid && frmAddProductCategory.image.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.image.$error.maxlength">Đường dẫn ảnh không được vượt quá 256 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMetaKeyword" class="col-sm-2 control-label">Meta keyword</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-maxlength="256" name="metaKeyword" ng-model="productCategory.MetaKeywork" id="inputMetaKeyword" placeholder="Meta keyword">
+                        <span ng-show="frmAddProductCategory.metaKeyword.$invalid && frmAddProductCategory.metaKeyword.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.metaKeyword.$error.maxlength">Meta keyword không được vượt quá 256 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMetaDescription" class="col-sm-2 control-label">Meta description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="metaDescription" ng-model="productCategory.MetaDescription" id="inputMetaDescription" placeholder="Meta description"></textarea>
+                        <span ng-show="frmAddProductCategory.metaDescription.$invalid && frmAddProductCategory.metaDescription.$dirty" class="has-error">
+                            <span ng-show="frmAddProductCategory.metaDescription.$error.maxlength">Meta description không được vượt quá 256 ký tự</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="status" ng-model="productCategory.Status" ng-checked="productCategory.Status"> Kích hoạt
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="homeFlag" ng-model="productCategory.HomeFlag" ng-checked="productCategory.HomeFlag"> Hiển thị trang chủ
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button ui-sref="product_categories" class="btn btn-default">Hủy</button>
+                <button ng-disabled="frmAddProductCategory.$invalid" type="submit" class="btn btn-info pull-right">Lưu</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>
+<!-- /.content -->

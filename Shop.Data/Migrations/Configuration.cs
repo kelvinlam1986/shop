@@ -48,6 +48,38 @@
                 context.ProductCategories.AddRange(productCategoryList);
                 context.SaveChanges();
             }
+
+            if (!context.Products.Any())
+            {
+                var productList = new List<Product>();
+                productList.Add(new Product
+                {
+                    Name = "Máy lạnh",
+                    Alias = "may-lanh",
+                    CategoryID = 1,
+                    Price = 2000000,
+                    Status = true,
+                    CreatedBy = "admin",
+                    CreatedDate = DateTime.Now,
+                    UpdatedBy = "admin",
+                    UpdatedDate = DateTime.Now
+                });
+                productList.Add(new Product
+                {
+                    Name = "Ti vi",
+                    Alias = "ti-vi",
+                    CategoryID = 3,
+                    Price = 4000000,
+                    Status = true,
+                    CreatedBy = "admin",
+                    CreatedDate = DateTime.Now,
+                    UpdatedBy = "admin",
+                    UpdatedDate = DateTime.Now
+                });
+
+                context.Products.AddRange(productList);
+                context.SaveChanges();
+            }
         }
     }
 }
