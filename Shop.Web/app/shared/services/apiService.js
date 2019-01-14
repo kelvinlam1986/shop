@@ -7,7 +7,21 @@
         return {
             get: get,
             post: post,
-            put: put
+            put: put,
+            del: del
+        }
+
+        function del(url, data, success, failed) {
+            $http.delete(url, data).then(function (result) {
+                success(result);
+            }, function (err) {
+                if (err.statusCode === '401') {
+                    notificationService.displayError('Authentication is required.');
+                    failed(err);
+                } else {
+                    failed(err);
+                }
+            });
         }
 
         function post(url, data, success, failed) {
