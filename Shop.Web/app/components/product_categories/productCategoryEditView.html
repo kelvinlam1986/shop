@@ -24,19 +24,30 @@
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Tên danh mục</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="name" ng-change="getSeoTitle()" ng-model="productCategory.Name" id="inputName" placeholder="Tên danh mục">
+                        <input type="text" class="form-control"required ng-maxlength="256" name="name" ng-change="getSeoTitle()" ng-model="productCategory.Name" id="inputName" placeholder="Tên danh mục">
+                        <span ng-show="frmUpdateProductCategory.name.$invalid && frmUpdateProductCategory.name.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.name.$error.required">Phải nhập tên danh mục</span>
+                            <span ng-show="frmUpdateProductCategory.name.$error.maxlength">Tên danh mục không được vượt quá 256 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAlias" class="col-sm-2 control-label">Tiêu đề SEO</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="alias" ng-model="productCategory.Alias" id="inputAlias" placeholder="Tiêu đề SEO">
+                        <input type="text" class="form-control" required ng-maxlength="256" name="alias" ng-model="productCategory.Alias" id="inputAlias" placeholder="Tiêu đề SEO">
+                        <span ng-show="frmUpdateProductCategory.alias.$invalid && frmUpdateProductCategory.alias.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.alias.$error.required">Phải nhập tiêu đề SEO</span>
+                            <span ng-show="frmUpdateProductCategory.alias.$error.maxlength">Tiêu đề SEO không được vượt quá 256 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">Mô tả</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-model="productCategory.Description" id="inputDescription" placeholder="Mô tả">
+                        <input type="text" class="form-control" name="description" ng-maxlength="500" ng-model="productCategory.Description" id="inputDescription" placeholder="Mô tả">
+                        <span ng-show="frmUpdateProductCategory.description.$invalid && frmUpdateProductCategory.description.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.description.$error.maxlength">Mô tả không được vượt quá 500 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,25 +65,37 @@
                 <div class="form-group">
                     <label for="inputDisplayOrder" class="col-sm-2 control-label">Thứ tự</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="displayOrder" ng-model="productCategory.DisplayOrder" id="inputDisplayOrder" placeholder="Thứ tự">
+                        <input type="number" class="form-control" required name="displayOrder" ng-model="productCategory.DisplayOrder" id="inputDisplayOrder" placeholder="Thứ tự">
+                        <span ng-show="frmUpdateProductCategory.displayOrder.$invalid && frmUpdateProductCategory.displayOrder.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.displayOrder.$error.required">Phải nhập thứ tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputImage" class="col-sm-2 control-label">Hình ảnh</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="image" ng-model="productCategory.Image" id="inputImage" placeholder="Hình ảnh">
+                        <input type="text" class="form-control" name="image" ng-maxlength="256" ng-model="productCategory.Image" id="inputImage" placeholder="Hình ảnh">
+                        <span ng-show="frmUpdateProductCategory.image.$invalid && frmUpdateProductCategory.image.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.image.$error.maxlength">Đường dẫn ảnh không được vượt quá 256 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputMetaKeyword" class="col-sm-2 control-label">Meta keyword</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="metaKeyword" ng-model="productCategory.MetaKeywork" id="inputMetaKeyword" placeholder="Meta keyword">
+                        <input type="text" class="form-control" name="metaKeyword" ng-maxlength="256" ng-model="productCategory.MetaKeywork" id="inputMetaKeyword" placeholder="Meta keyword">
+                        <span ng-show="frmUpdateProductCategory.metaKeyword.$invalid && frmUpdateProductCategory.metaKeyword.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.metaKeyword.$error.maxlength">Meta keyword không được vượt quá 256 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputMetaDescription" class="col-sm-2 control-label">Meta description</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="metaDescription" ng-model="productCategory.MetaDescription" id="inputMetaDescription" placeholder="Meta description"></textarea>
+                        <textarea class="form-control" name="metaDescription" ng-maxlength="256" ng-model="productCategory.MetaDescription" id="inputMetaDescription" placeholder="Meta description"></textarea>
+                        <span ng-show="frmUpdateProductCategory.metaDescription.$invalid && frmUpdateProductCategory.metaDescription.$dirty" class="has-error">
+                            <span ng-show="frmUpdateProductCategory.metaDescription.$error.maxlength">Meta description không được vượt quá 256 ký tự</span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
