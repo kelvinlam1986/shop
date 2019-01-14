@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('productCategoryAddController', productCategoryAddController);
-    productCategoryAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state']
-    function productCategoryAddController($scope, apiService, notificationService, $state) {
+    productCategoryAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state', 'commonService']
+    function productCategoryAddController($scope, apiService, notificationService, $state, commonService) {
         $scope.productCategory = {
             CreatedDate: new Date(),
             CreatedBy: 'admin',
@@ -9,9 +9,14 @@
             UpdatedBy: 'admin',
             Status: true
         };
-        $scope.parentCategories = [];
 
+        $scope.parentCategories = [];
         $scope.addProductCategory = addProductCategory;
+        $scope.getSeoTitle = getSeoTitle;
+
+        function getSeoTitle() {
+            $scope.productCategory.Alias = commonService.getSeoTitle($scope.productCategory.Name);
+        }
 
         function addProductCategory() {
             apiService.post('/api/productcategory/create', $scope.productCategory,
