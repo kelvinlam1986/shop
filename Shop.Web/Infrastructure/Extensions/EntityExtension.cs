@@ -62,5 +62,32 @@ namespace Shop.Web.Infrastructure.Extensions
             post.MetaDescription = postVM.MetaDescription;
             post.Status = postVM.Status;
         }
+
+
+        public static void UpdateProduct(this Product product, ProductViewModel productVm)
+        {
+            product.ID = productVm.ID;
+            product.Name = productVm.Name;
+            product.Alias = productVm.Alias;
+            product.Description = productVm.Description;
+            product.CategoryID = productVm.CategoryID;
+            product.Image = productVm.Image;
+            product.MoreImages = productVm.MoreImages;
+            product.DisplayOrder = productVm.DisplayOrder;
+            product.Price = productVm.Price;
+            product.Promotion = productVm.Promotion;
+            product.Waranty = productVm.Waranty;
+            product.Content = productVm.Content;
+            product.HomeFlag = productVm.HomeFlag;
+            product.HotFlag = productVm.HotFlag;
+            product.ViewCount = productVm.ViewCount;
+            product.CreatedDate = productVm.CreatedDate;
+            product.CreatedBy = productVm.CreatedBy;
+            product.UpdatedDate = productVm.UpdatedDate;
+            product.UpdatedBy = productVm.UpdatedBy;
+            product.MetaKeywork = productVm.MetaKeywork;
+            product.MetaDescription = productVm.MetaDescription;
+            product.Status = productVm.Status;
+        }
     }
 }

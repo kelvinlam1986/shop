@@ -2,6 +2,7 @@
 using Shop.Model.Models;
 using Shop.Service;
 using Shop.Web.Infrastructure.Core;
+using Shop.Web.Infrastructure.Extensions;
 using Shop.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -73,5 +74,77 @@ namespace Shop.Web.Api
                 return response;
             });
         }
+
+        [Route("create")]
+        [HttpPost]
+        public HttpResponseMessage Create(HttpRequestMessage request, ProductViewModel productVm)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var newProduct = new Product();
+                    newProduct.UpdateProduct(productVm);
+                    newProduct.CreatedBy = "admin";
+                    newProduct.CreatedDate = DateTime.Now;
+                    newProduct.UpdatedBy = "admin";
+                    newProduct.UpdatedDate = DateTime.Now;
+                    _productService.Add(newProduct);
+                    _productService.SaveChanges();
+                    var responseData = Mapper.Map<Product, ProductViewModel>(newProduct);
+                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                }
+
+                return response;
+            });
+        }
+
+        [Route("update")]
+        [HttpPut]
+        public HttpResponseMessage Update(HttpRequestMessage request, ProductViewModel productVm)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var dbProduct = _productService.GetById(productVm.ID);
+                    dbProduct.UpdateProduct(productVm);
+                    dbProduct.UpdatedBy = "admin";
+                    dbProduct.UpdatedDate = DateTime.Now;
+                    _productService.Update(dbProduct);
+                    _productService.SaveChanges();
+                    var responseData = Mapper.Map<Product, ProductViewModel>(dbProduct);
+                    response = request.CreateResponse(HttpStatusCode.OK, responseData);
+                }
+
+                return response;
+            });
+        }
+
+        [Route("getbyid/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                var product = _productService.GetById(id);
+                var productVM = Mapper.Map<Product, ProductViewModel>(product);
+                response = request.CreateResponse(HttpStatusCode.OK, productVM);
+                return response;
+            });
+        }
     }
+
+    
 }
