@@ -10,6 +10,7 @@ using Shop.Web.Models;
 using System.Web.Http;
 using System;
 using Shop.Web.Infrastructure.Extensions;
+using System.Web.Script.Serialization;
 
 namespace Shop.Web.Api
 {
@@ -153,6 +154,33 @@ namespace Shop.Web.Api
                     _productCategoryService.SaveChanges();
                     var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(oldProduct);
                     response = request.CreateResponse(HttpStatusCode.OK, responseData);
+                }
+
+                return response;
+            });
+        }
+
+        [Route("deletemulti")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string listId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var ids = new JavaScriptSerializer().Deserialize<List<int>>(listId);
+                    foreach (var id in ids)
+                    {
+                        _productCategoryService.Delete(id);
+                    }
+                    
+                    _productCategoryService.SaveChanges();
+                    response = request.CreateResponse(HttpStatusCode.OK, ids.Count);
                 }
 
                 return response;
