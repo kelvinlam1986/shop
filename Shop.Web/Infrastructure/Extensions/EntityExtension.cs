@@ -88,6 +88,7 @@ namespace Shop.Web.Infrastructure.Extensions
             product.MetaKeywork = productVm.MetaKeywork;
             product.MetaDescription = productVm.MetaDescription;
             product.Status = productVm.Status;
+            product.Tags = productVm.Tags;
         }
     }
 }

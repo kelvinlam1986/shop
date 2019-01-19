@@ -42,6 +42,7 @@ namespace Shop.Model.Models
         public string Content { get; set; }
         public bool? HomeFlag { get; set; }
         public bool? HotFlag { get; set; }
+        public string Tags { get; set; }
         public int? ViewCount { get; set; }
     }
 }

@@ -34,5 +34,6 @@ namespace Shop.Web.Models
         public string CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
+        public string Tags { get; set; }
     }
 }
