@@ -5,6 +5,7 @@
     productAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state', 'commonService']
     function productAddController($scope, apiService, notificationService, $state, commonService) {
         $scope.categories = [];
+        $scope.moreImages = [];
         $scope.product = {
             CreatedDate: new Date(),
             CreatedBy: 'admin',
@@ -21,17 +22,21 @@
         $scope.addProduct = addProduct;
         $scope.getSeoTitle = getSeoTitle;
         $scope.chooseImage = chooseImage;
+        $scope.chooseMoreImage = chooseMoreImage;
 
         function chooseImage() {
             var finder = new CKFinder();
             finder.selectActionFunction = function (fileUrl, data) {
-                $scope.product.Image = fileUrl;
+                $scope.$apply(function () {
+                    $scope.product.Image = fileUrl;
+                });
             };
 
             finder.popup();
         }
 
         function addProduct() {
+            $scope.product.MoreImages = JSON.stringify($scope.moreImages);
             apiService.post('/api/product/create', $scope.product,
                 function (result) {
                     notificationService.displaySuccess($scope.product.Name + ' đã được thêm thành công.');
@@ -51,6 +56,17 @@
             }, function (err) {
                 console.log('Can not load product category list');
             })
+        }
+
+        function chooseMoreImage() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl, data) {
+                $scope.$apply(function () {
+                    $scope.moreImages.push(fileUrl);
+                })
+            };
+
+            finder.popup();
         }
 
         loadProductCategories();
