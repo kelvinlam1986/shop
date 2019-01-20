@@ -7,10 +7,6 @@
         $scope.categories = [];
         $scope.moreImages = [];
         $scope.product = {
-            CreatedDate: new Date(),
-            CreatedBy: 'admin',
-            UpdatedDate: new Date(),
-            UpdatedBy: 'admin',
             Status: true
         };
 

@@ -14,6 +14,7 @@ using System.Web.Http;
 namespace Shop.Web.Api
 {
     [RoutePrefix("api/product")]
+    [Authorize]
     public class ProductController : ApiControllerBase
     {
         private IProductService _productService;
@@ -90,9 +91,9 @@ namespace Shop.Web.Api
                 {
                     var newProduct = new Product();
                     newProduct.UpdateProduct(productVm);
-                    newProduct.CreatedBy = "admin";
+                    newProduct.CreatedBy = User.Identity.Name;
                     newProduct.CreatedDate = DateTime.Now;
-                    newProduct.UpdatedBy = "admin";
+                    newProduct.UpdatedBy = User.Identity.Name;
                     newProduct.UpdatedDate = DateTime.Now;
                     _productService.Add(newProduct);
                     _productService.SaveChanges();

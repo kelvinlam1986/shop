@@ -3,8 +3,6 @@
     productCategoryEditController.$inject = ['$scope', 'apiService', 'notificationService', '$state', '$stateParams', 'commonService']
     function productCategoryEditController($scope, apiService, notificationService, $state, $stateParams, commonService) {
         $scope.productCategory = {
-            UpdatedDate: new Date(),
-            UpdatedBy: 'admin',
             Status: true
         };
         $scope.parentCategories = [];

@@ -5,8 +5,6 @@
         $scope.categories = [];
         $scope.moreImages = [];
         $scope.product = {
-            UpdatedDate: new Date(),
-            UpdatedBy: 'admin'
         };
 
         $scope.ckeditorOptions = {

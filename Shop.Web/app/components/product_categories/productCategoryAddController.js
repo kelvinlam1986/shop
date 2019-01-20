@@ -3,10 +3,6 @@
     productCategoryAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state', 'commonService']
     function productCategoryAddController($scope, apiService, notificationService, $state, commonService) {
         $scope.productCategory = {
-            CreatedDate: new Date(),
-            CreatedBy: 'admin',
-            UpdatedDate: new Date(),
-            UpdatedBy: 'admin',
             Status: true
         };
 

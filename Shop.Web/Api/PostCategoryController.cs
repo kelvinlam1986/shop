@@ -8,11 +8,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using System;
 
 namespace Shop.Web.Api
 {
     [RoutePrefix("api/postcategory")]
+    [Authorize]
     public class PostCategoryController : ApiControllerBase
     {
         private IPostCategoryService _postCategoryService;
@@ -56,12 +57,21 @@ namespace Shop.Web.Api
                 {
                     var postCategory = new PostCategory();
                     postCategory.UpdatePostCategory(postCategoryVM);
+                    postCategory.CreatedBy = User.Identity.Name;
+                    postCategory.CreatedDate = DateTime.Now;
+                    postCategory.UpdatedBy = User.Identity.Name;
+                    postCategory.UpdatedDate = DateTime.Now;
                     var category = _postCategoryService.Add(postCategory);
                     _postCategoryService.SaveChanges();
                     response = request.CreateResponse(HttpStatusCode.Created, category);
                 }
                 return response;
             });
+        }
+
+        private HttpResponseMessage CreateHttpResponse(HttpRequestMessage request, Func<HttpResponseMessage> p)
+        {
+            throw new NotImplementedException();
         }
 
         [Route("update")]
@@ -78,6 +88,8 @@ namespace Shop.Web.Api
                 {
                     var postCategoryDb = _postCategoryService.GetById(postCategoryVM.ID);
                     postCategoryDb.UpdatePostCategory(postCategoryVM);
+                    postCategoryDb.UpdatedDate = DateTime.Now;
+                    postCategoryDb.UpdatedBy = User.Identity.Name;
                     _postCategoryService.Update(postCategoryDb);
                     _postCategoryService.SaveChanges();
                     response = request.CreateResponse(HttpStatusCode.OK);

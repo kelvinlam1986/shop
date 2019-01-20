@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.factory('apiService', apiService);
 
-    apiService.$inject = ['$http', 'notificationService'];
+    apiService.$inject = ['$http', 'notificationService', 'authenticationService'];
 
-    function apiService($http, notificationService) {
+    function apiService($http, notificationService, authenticationService) {
         return {
             get: get,
             post: post,
@@ -12,6 +12,7 @@
         }
 
         function del(url, data, success, failed) {
+            authenticationService.setHeader();
             $http.delete(url, data).then(function (result) {
                 success(result);
             }, function (err) {
@@ -25,6 +26,7 @@
         }
 
         function post(url, data, success, failed) {
+            authenticationService.setHeader();
             $http.post(url, data).then(function (result) {
                 success(result);
             }, function (err) {
@@ -38,6 +40,7 @@
         }
 
         function put(url, data, success, failed) {
+            authenticationService.setHeader();
             $http.put(url, data).then(function (result) {
                 success(result);
             }, function (err) {
@@ -51,6 +54,7 @@
         }
 
         function get(url, params, success, failed) {
+            authenticationService.setHeader();
             $http.get(url, params).then(function (result) {
                 success(result);
             }, function (error) {

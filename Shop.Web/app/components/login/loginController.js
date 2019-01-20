@@ -1,9 +1,22 @@
-﻿(function (app) {
-    app.controller('loginController', loginController);
-    loginController.$inject = ['$scope', '$state'];
-    function loginController($scope, $state) {
-        $scope.loginSubmit = function () {
-            $state.go('home');
+﻿(function (app) { 
+    app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService',
+        function ($scope, loginService, $injector, notificationService) {
+            $scope.loginData = {
+                userName: '',
+                password: ''
+            };
+
+            $scope.loginSubmit = function () {
+                loginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
+                    console.log('response', response);
+                    if (response != null && response.data.error != undefined) {
+                        notificationService.displayError('Đăng nhập không thành công');
+                    } else {
+                        var stateService = $injector.get('$state');
+                        stateService.go('home')
+                    }
+                })
+            }
         }
-    }
+    ])
 })(angular.module('shop'));
