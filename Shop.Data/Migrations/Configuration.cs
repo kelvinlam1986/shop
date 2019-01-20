@@ -1,5 +1,6 @@
 ﻿namespace Shop.Data.Migrations
 {
+    using Common;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Model.Models;
@@ -18,26 +19,41 @@
 
         protected override void Seed(Shop.Data.ShopDbContext context)
         {
+            CreateUserData();
+            CreateFooterData(context);
+            CreateSilderData(context);
+            CreateProductCategoryData(context);
+            CreateProductData(context);
+        }
+
+        private void CreateUserData()
+        {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ShopDbContext()));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ShopDbContext()));
-            var user = new ApplicationUser
+            if (!userManager.Users.Any())
             {
-                UserName = "admin",
-                Email = "kelvincoder@gmail.com",
-                BirthDate = new DateTime(1986, 10, 10),
-                FullName = "Lam Su Minh",
-            };
+                var user = new ApplicationUser
+                {
+                    UserName = "admin",
+                    Email = "kelvincoder@gmail.com",
+                    BirthDate = new DateTime(1986, 10, 10),
+                    FullName = "Lam Su Minh",
+                };
 
-            userManager.Create(user, "12345678x@X");
-            if (!roleManager.Roles.Any())
-            {
-                roleManager.Create(new IdentityRole("User"));
-                roleManager.Create(new IdentityRole("Admin"));
+                userManager.Create(user, "12345678x@X");
+
+                if (!roleManager.Roles.Any())
+                {
+                    roleManager.Create(new IdentityRole("User"));
+                    roleManager.Create(new IdentityRole("Admin"));
+
+                    var adminUser = userManager.FindByEmail("kelvincoder@gmail.com");
+                    userManager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
+                }
             }
-
-            var adminUser = userManager.FindByEmail("kelvincoder@gmail.com");
-            userManager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
-
+        }
+        private void CreateProductCategoryData(ShopDbContext context)
+        {
             if (!context.ProductCategories.Any())
             {
                 var productCategoryList = new List<ProductCategory>();
@@ -48,7 +64,9 @@
                 context.ProductCategories.AddRange(productCategoryList);
                 context.SaveChanges();
             }
-
+        }
+        private void CreateProductData(ShopDbContext context)
+        {
             if (!context.Products.Any())
             {
                 var productList = new List<Product>();
@@ -78,6 +96,34 @@
                 });
 
                 context.Products.AddRange(productList);
+                context.SaveChanges();
+            }
+        }
+        private void CreateFooterData(ShopDbContext context)
+        {
+            if (context.Footers.Count(x => x.ID == CommonConstants.DefaultFooterId) == 0)
+            {
+                var footer = new Footer
+                {
+                    ID = CommonConstants.DefaultFooterId,
+                    Content = SampleData.Footer
+                };
+
+                context.Footers.Add(footer);
+                context.SaveChanges();
+            }
+        }
+        private void CreateSilderData(ShopDbContext context)
+        {
+            if (!context.Slides.Any())
+            {
+                var listSlide = new List<Slide>
+                {
+                    new Slide { Name = "Slide 1", DisplayOrder = 1, Status = true, Url = "#", Image = "/Assets/client/images/bag.jpg", Description = SampleData.Slider1Description },
+                    new Slide { Name = "Slide 2", DisplayOrder = 2, Status = true, Url = "#", Image = "/Assets/client/images/bag1.jpg", Description = SampleData.Slider2Description },
+                };
+
+                context.Slides.AddRange(listSlide);
                 context.SaveChanges();
             }
         }

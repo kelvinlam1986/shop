@@ -100,6 +100,11 @@
     <Compile Include="Repositories\SystemConfigRepository.cs" />
     <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="Repositories\VisitorStatisticRepository.cs" />
+    <Compile Include="SampleData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleData.resx</DependentUpon>
+    </Compile>
     <Compile Include="ShopDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +134,12 @@
     <EmbeddedResource Include="Migrations\201901190505306_AddTagFieldToProductTable.resx">
       <DependentUpon>201901190505306_AddTagFieldToProductTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SampleData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SampleData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -17,6 +17,8 @@ namespace Shop.Service
         Product Delete(int id);
         IEnumerable<Product> GetAll();
         IEnumerable<Product> GetAll(string keyword);
+        IEnumerable<Product> GetHot(int top);
+        IEnumerable<Product> GetLatest(int top);
         Product GetById(int id);
         void SaveChanges();
     }
@@ -131,6 +133,16 @@ namespace Shop.Service
 
             _unitOfWork.Commit();
 
+        }
+
+        public IEnumerable<Product> GetHot(int top)
+        {
+            return this._productRepository.GetMulti(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top);
+        }
+
+        public IEnumerable<Product> GetLatest(int top)
+        {
+            return this._productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.CreatedDate).Take(top);
         }
     }
 }

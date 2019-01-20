@@ -14,19 +14,40 @@ namespace Shop.Web.Controllers
     {
         private IProductCategoryService _productCategoryService;
         private ICommonService _commonService;
+        private IProductService _productService;
 
         public IMapper Mapper { get; set; }
 
-        public HomeController(IProductCategoryService productCategoryService, ICommonService commonService, IMapper mapper)
+        public HomeController(
+            IProductCategoryService productCategoryService,
+            IProductService productService, 
+            ICommonService commonService, 
+            IMapper mapper)
         {
             this._productCategoryService = productCategoryService;
             this._commonService = commonService;
+            this._productService = productService;
             Mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            return View();
+            var slides = this._commonService.GetSlides();
+            var latestProducts = this._productService.GetLatest(3);
+            var hotProducts = this._productService.GetHot(3);
+
+            var slidesViewModel = Mapper.Map<IEnumerable<Slide>, IEnumerable<SlideViewModel>>(slides);
+            var latestProductsViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(latestProducts);
+            var hotProductsViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(hotProducts);
+
+            var homeViewModel = new HomeViewModel
+            {
+                Slides = slidesViewModel,
+                LatestProducts = latestProductsViewModel,
+                TopSalesProducts = hotProductsViewModel
+            };
+
+            return View(homeViewModel);
         }
 
         public ActionResult About()
