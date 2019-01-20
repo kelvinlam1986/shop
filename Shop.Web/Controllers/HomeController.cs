@@ -26,5 +26,22 @@ namespace Shop.Web.Controllers
 
             return View();
         }
+
+        [ChildActionOnly]
+        public ActionResult Footer()
+        {
+            return PartialView();
+        }
+
+        [ChildActionOnly]
+        public ActionResult Header()
+        {
+            return PartialView();
+        }
+
+        public ActionResult Category()
+        {
+            return PartialView();
+        }
     }
 }
