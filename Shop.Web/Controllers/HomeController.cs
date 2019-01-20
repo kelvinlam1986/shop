@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using Shop.Model.Models;
+using Shop.Service;
+using Shop.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +12,18 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IProductCategoryService _productCategoryService;
+        private ICommonService _commonService;
+
+        public IMapper Mapper { get; set; }
+
+        public HomeController(IProductCategoryService productCategoryService, ICommonService commonService, IMapper mapper)
+        {
+            this._productCategoryService = productCategoryService;
+            this._commonService = commonService;
+            Mapper = mapper;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -30,7 +46,9 @@ namespace Shop.Web.Controllers
         [ChildActionOnly]
         public ActionResult Footer()
         {
-            return PartialView();
+            var footer = this._commonService.GetFooter();
+            var footerViewModel = Mapper.Map<Footer, FooterViewModel>(footer);
+            return PartialView(footerViewModel);
         }
 
         [ChildActionOnly]
@@ -41,7 +59,9 @@ namespace Shop.Web.Controllers
 
         public ActionResult Category()
         {
-            return PartialView();
+            var categories = _productCategoryService.GetAll();
+            var categoryListViewModel = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(categories);
+            return PartialView(categoryListViewModel);
         }
     }
 }

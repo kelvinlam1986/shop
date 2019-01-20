@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Shop.Model.Models;
 using Shop.Web.Models;
+using System.Collections.Generic;
 
 namespace Shop.Web.Mappings
 {
@@ -17,6 +18,7 @@ namespace Shop.Web.Mappings
                         cfg.CreateMap<ProductCategory, ProductCategoryViewModel>();
                         cfg.CreateMap<Product, ProductViewModel>();
                         cfg.CreateMap<ProductTag, ProductTagViewModel>();
+                        cfg.CreateMap<Footer, FooterViewModel>();
                     }
                 );
 
