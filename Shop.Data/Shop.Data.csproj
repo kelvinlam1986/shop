@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201901190505306_AddTagFieldToProductTable.Designer.cs">
       <DependentUpon>201901190505306_AddTagFieldToProductTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901270656338_AddQuantityColumnToProductTable.cs" />
+    <Compile Include="Migrations\201901270656338_AddQuantityColumnToProductTable.Designer.cs">
+      <DependentUpon>201901270656338_AddQuantityColumnToProductTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
@@ -133,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901190505306_AddTagFieldToProductTable.resx">
       <DependentUpon>201901190505306_AddTagFieldToProductTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901270656338_AddQuantityColumnToProductTable.resx">
+      <DependentUpon>201901270656338_AddQuantityColumnToProductTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SampleData.resx">
       <Generator>ResXFileCodeGenerator</Generator>

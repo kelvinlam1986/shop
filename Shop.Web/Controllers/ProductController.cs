@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Shop.Web.Controllers
 {
@@ -28,7 +29,19 @@ namespace Shop.Web.Controllers
 
         public ActionResult Detail(int productId)
         {
-            return View();
+            var product = this._productService.GetById(productId);
+            var productViewModel = Mapper.Map<Product, ProductViewModel>(product);
+            var relatedProducts = this._productService.GetRelatedProducts(productId, 5);
+            var relatedProductsViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(relatedProducts);
+            ViewBag.RelatedProducts = relatedProductsViewModel;
+            List<string> moreImageList = new List<string>();
+            if (product.MoreImages != null)
+            {
+                moreImageList = new JavaScriptSerializer().Deserialize<List<string>>(product.MoreImages);
+            }
+           
+            ViewBag.MoreImages = moreImageList;
+            return View(productViewModel);
         }
 
         public ActionResult Category(int id, int page = 1, string sort = "")

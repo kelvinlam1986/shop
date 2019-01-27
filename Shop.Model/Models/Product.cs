@@ -44,5 +44,6 @@ namespace Shop.Model.Models
         public bool? HotFlag { get; set; }
         public string Tags { get; set; }
         public int? ViewCount { get; set; }
+        public int Quantity { get; set; }
     }
 }

@@ -35,5 +35,6 @@ namespace Shop.Web.Models
         public DateTime? UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public string Tags { get; set; }
+        public int Quantity { get; set; }
     }
 }

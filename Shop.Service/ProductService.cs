@@ -21,6 +21,7 @@ namespace Shop.Service
         IEnumerable<Product> GetLatest(int top);
         IEnumerable<Product> GetProductListByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow);
         IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow);
+        IEnumerable<Product> GetRelatedProducts(int id, int top);
         IEnumerable<string> GetProductListByName(string name);
         Product GetById(int id);
         void SaveChanges();
@@ -196,6 +197,13 @@ namespace Shop.Service
 
             totalRow = query.Count();
             return query.Skip((page - 1) * pageSize).Take(pageSize);
+        }
+
+        public IEnumerable<Product> GetRelatedProducts(int id, int top)
+        {
+            var product = this._productRepository.GetSingleById(id);
+            return this._productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID)
+                    .OrderByDescending(x => x.CreatedDate).Take(top);
         }
     }
 }
