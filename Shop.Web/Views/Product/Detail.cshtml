@@ -44,6 +44,19 @@
             <h6>@Model.Quantity sản phẩm trong kho</h6>
             <p>@Model.Description</p>
             <div class="share">
+                <h5>Tag :</h5>
+                <ul class="share_nav">
+                    @{
+                        var tags = (IEnumerable<Shop.Web.Models.TagViewModel>)ViewBag.Tags;
+                        foreach (var tag in tags)
+                        {
+                            <li><a href="/tag/@(tag.ID).html">@tag.Name</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="share">
                 <h5>Chia sẻ :</h5>
                 <ul class="share_nav">
                     <li><a href="#"><img src="~/Assets/client/images/facebook.png" title="facebook"></a></li>
@@ -52,8 +65,6 @@
                     <li><a href="#"><img src="~/Assets/client/images/gpluse.png" title="Google+"></a></li>
                 </ul>
             </div>
-
-
         </div>
         <div class="clearfix"> </div>
     </div>

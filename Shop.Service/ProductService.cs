@@ -25,6 +25,10 @@ namespace Shop.Service
         IEnumerable<string> GetProductListByName(string name);
         Product GetById(int id);
         void SaveChanges();
+        IEnumerable<Tag> GetTagListByProductId(int id);
+        void IncreaseView(int id);
+        IEnumerable<Product> GetProductsByTagId(string tag, int page, int pageSize, out int totalRow);
+        Tag GetTagById(string tagId);
     }
 
     public class ProductService : IProductService
@@ -204,6 +208,36 @@ namespace Shop.Service
             var product = this._productRepository.GetSingleById(id);
             return this._productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID)
                     .OrderByDescending(x => x.CreatedDate).Take(top);
+        }
+
+        public IEnumerable<Tag> GetTagListByProductId(int id)
+        {
+            return this._productTagRepository.GetMulti(x => x.ProductID == id, new string[] { "Tag" }).Select(x => x.Tag);
+        }
+
+        public void IncreaseView(int id)
+        {
+            var product = this._productRepository.GetSingleById(id);
+            if (product.ViewCount.HasValue)
+            {
+                product.ViewCount += 1;
+            }
+            else
+            {
+                product.ViewCount = 1;
+            }
+            _unitOfWork.Commit();
+        }
+
+        public IEnumerable<Product> GetProductsByTagId(string tag, int page, int pageSize, out int totalRow)
+        {
+            var products = this._productRepository.GetProductByTag(tag, page, pageSize, out totalRow);
+            return products;
+        }
+
+        public Tag GetTagById(string tagId)
+        {
+            return _tagRepository.GetSingleByCondition(x => x.ID == tagId);
         }
     }
 }

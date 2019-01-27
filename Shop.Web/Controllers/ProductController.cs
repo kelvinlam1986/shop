@@ -41,6 +41,9 @@ namespace Shop.Web.Controllers
             }
            
             ViewBag.MoreImages = moreImageList;
+            var tags = this._productService.GetTagListByProductId(productId);
+            var tagsViewModel = Mapper.Map<IEnumerable<Tag>, IEnumerable<TagViewModel>>(tags);
+            ViewBag.Tags = tagsViewModel;
             return View(productViewModel);
         }
 
@@ -78,6 +81,30 @@ namespace Shop.Web.Controllers
             int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
 
             ViewBag.Keyword = keyword;
+            var paginationSet = new PaginationSet<ProductViewModel>
+            {
+                Items = productViewModel,
+                MaxPage = maxPage,
+                Page = page,
+                TotalCount = totalRow,
+                TotalPages = totalPage
+            };
+
+            return View(paginationSet);
+        }
+
+        public ActionResult ListByTag(string tagId, int page = 1)
+        {
+            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
+            int maxPage = int.Parse(ConfigHelper.GetByKey("MaxPage"));
+            int totalRow = 0;
+            var productModel = _productService.GetProductsByTagId(tagId, page, pageSize, out totalRow);
+            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
+            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
+
+            var tag = this._productService.GetTagById(tagId);
+            var tagViewModel = Mapper.Map<Tag, TagViewModel>(tag);
+            ViewBag.Tag = tagViewModel;
             var paginationSet = new PaginationSet<ProductViewModel>
             {
                 Items = productViewModel,
