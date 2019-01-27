@@ -9,6 +9,18 @@
 
         $scope.updateProductCategory = updateProductCategory;
         $scope.getSeoTitle = getSeoTitle;
+        $scope.chooseImage = chooseImage;
+
+        function chooseImage() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl, data) {
+                $scope.$apply(function () {
+                    $scope.productCategory.Image = fileUrl;
+                });
+            };
+
+            finder.popup();
+        }
 
         function getSeoTitle() {
             $scope.productCategory.Alias = commonService.getSeoTitle($scope.productCategory.Name);
