@@ -25,6 +25,7 @@
             CreateProductCategoryData(context);
             CreateProductData(context);
             CreatePageData(context);
+            CreateContactDetailsData(context);
         }
 
         private void CreateUserData()
@@ -150,6 +151,28 @@
                 };
 
                 context.Pages.Add(page);
+                context.SaveChanges();
+            }
+        }
+
+        private void CreateContactDetailsData(ShopDbContext context)
+        {
+            if (!context.ContactDetails.Any())
+            {
+                var contactDetail = new ContactDetail
+                {
+                    Name = "Shop thời trang",
+                    Address = "240/2 Lê Thánh Tôn P.Bến Thành Q.1 TPHCM",
+                    Email = "kelvincoder@gmail.com",
+                    Lat = 10.7725631,
+                    Lng = 106.6938348,
+                    Phone = "0902305226",
+                    Website = "myshop.com.vn",
+                    Status = true,
+                    Other = "Shop thời trang chuyên bán các sản phẩm thời trang mới nhất"
+                };
+
+                context.ContactDetails.Add(contactDetail);
                 context.SaveChanges();
             }
         }

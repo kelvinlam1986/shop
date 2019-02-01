@@ -28,6 +28,7 @@ namespace Shop.Data
         public DbSet<SystemConfig> SystemConfigs { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
+        public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Error> Errors { get; set; }
 
         public static ShopDbContext Create()
