@@ -88,10 +88,15 @@
     <Compile Include="Migrations\201901301640121_AddContactDetailTable.Designer.cs">
       <DependentUpon>201901301640121_AddContactDetailTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902020421216_addFeedbackTable.cs" />
+    <Compile Include="Migrations\201902020421216_addFeedbackTable.Designer.cs">
+      <DependentUpon>201902020421216_addFeedbackTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ContactDetailRepository.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\FooterRepository.cs" />
     <Compile Include="Repositories\MenuGroupRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
@@ -148,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901301640121_AddContactDetailTable.resx">
       <DependentUpon>201901301640121_AddContactDetailTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902020421216_addFeedbackTable.resx">
+      <DependentUpon>201902020421216_addFeedbackTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SampleData.resx">
       <Generator>ResXFileCodeGenerator</Generator>
