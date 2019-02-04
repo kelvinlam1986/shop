@@ -47,6 +47,7 @@
             <div class="contact-form">
                 @using (Html.BeginForm("SendFeedback", "Contact", FormMethod.Post))
                 {
+                    @Html.AntiForgeryToken();
                     if (ViewData["SuccessMsg"] != null)
                     {
                         <div class="alert alert-success" role="alert">
