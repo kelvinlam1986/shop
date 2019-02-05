@@ -1,0 +1,64 @@
+﻿@model Shop.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+<style>
+     .login-right input[type="password"] {
+        border: 1px solid #EEE;
+        outline-color: #FF5B36;
+        width: 85%;
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 0.5em 0;
+    }
+
+    .login-right input[type="submit"] {
+        background: #F97E76;
+        color: #FFF;
+        font-size: 1em;
+        padding: 0.8em 2em;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+        display: inline-block;
+        text-transform: uppercase;
+        border: none;
+        outline: none;
+    }
+    .error {
+        color: red;
+    }
+</style>
+
+<div class="account_grid">
+    <div class="login-right">
+        <h3>Đăng nhập</h3>
+        @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            <div>
+                <span>Tài khoản<label>*</label></span>
+                @Html.TextBoxFor(model => model.UserName)
+            </div>
+            <div>
+                <span>Mật khẩu<label>*</label></span>
+                @Html.PasswordFor(model => model.Password)
+            </div>
+            <div>
+                @Html.CheckBoxFor(model => model.RememberMe)
+                Nhớ mật khẩu
+            </div>
+           
+            <input type="submit" value="Đăng nhập">
+        }
+    </div>
+    <div class="login-left">
+        <h3>Chưa có tài khoản</h3>
+        <p>Nếu bạn chưa có tài khoản vui lòng đăng ký tại link dưới đây</p>
+        <a class="acount-btn" href="/dang-ky.html">Đăng ký thành viên</a>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
