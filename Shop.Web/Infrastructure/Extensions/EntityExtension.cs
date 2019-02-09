@@ -64,7 +64,6 @@ namespace Shop.Web.Infrastructure.Extensions
             post.Status = postVM.Status;
         }
 
-
         public static void UpdateProduct(this Product product, ProductViewModel productVm)
         {
             product.ID = productVm.ID;
@@ -101,6 +100,20 @@ namespace Shop.Web.Infrastructure.Extensions
             feedback.Message = feedbackVm.Message;
             feedback.CreatedDate = DateTime.Now;
             feedback.Status = feedbackVm.Status;
+        }
+
+        public static void UpdateOrder(this Order order, OrderViewModel orderVm)
+        {
+            order.CustomerName = orderVm.CustomerName;
+            order.CustomerAddress = orderVm.CustomerAddress;
+            order.CustomerEmail = orderVm.CustomerEmail;
+            order.CustomerMobile = orderVm.CustomerMobile;
+            order.CustomerMessage = orderVm.CustomerMessage;
+            order.PaymentMethod = orderVm.PaymentMethod;
+            order.PaymentStatus = orderVm.PaymentStatus;
+            order.CreatedDate = DateTime.Now;
+            order.CreatedBy = orderVm.CreatedBy;
+            order.CustomerId = orderVm.CustomerId;
         }
     }
 }

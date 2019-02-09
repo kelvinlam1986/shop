@@ -26,8 +26,19 @@ namespace Shop.Model.Models
         [Column(TypeName = "varchar")]
         public string CustomerMobile { get; set; }
 
+        [Required]
+        [MaxLength(256)]
+        public string CustomerEmail { get; set; }
+
         [MaxLength(250)]
         public string CustomerMessage { get; set; }
+
+        [MaxLength(128)]
+        public string CustomerId { get; set; }
+
+        [ForeignKey("CustomerId")]
+        public virtual ApplicationUser User { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         [MaxLength(50)]
