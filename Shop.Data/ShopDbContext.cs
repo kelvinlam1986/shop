@@ -30,6 +30,10 @@ namespace Shop.Data
         public DbSet<VisitorStatistic> VisitorStatistics { get; set; }
         public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
+        public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public DbSet<Error> Errors { get; set; }
 
         public static ShopDbContext Create()
@@ -40,6 +44,11 @@ namespace Shop.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>().ToTable("ApplicationUsers");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("ApplicationUserRoles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("ApplicationUserLogins");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("ApplicationUserClaims");
+            modelBuilder.Entity<IdentityRole>().ToTable("ApplicationRoles");
         }
 
     }

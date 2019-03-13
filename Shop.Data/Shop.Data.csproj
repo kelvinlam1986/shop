@@ -100,8 +100,20 @@
     <Compile Include="Migrations\201902081026551_addCustomerEmailToOrderTable.Designer.cs">
       <DependentUpon>201902081026551_addCustomerEmailToOrderTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902170808540_RenameIdentityTables.cs" />
+    <Compile Include="Migrations\201902170808540_RenameIdentityTables.Designer.cs">
+      <DependentUpon>201902170808540_RenameIdentityTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902170859006_addGroupTable.cs" />
+    <Compile Include="Migrations\201902170859006_addGroupTable.Designer.cs">
+      <DependentUpon>201902170859006_addGroupTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ApplicationGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationRoleGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationRoleRepository.cs" />
+    <Compile Include="Repositories\ApplicationUserGroupRepository.cs" />
     <Compile Include="Repositories\ContactDetailRepository.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
@@ -170,6 +182,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081026551_addCustomerEmailToOrderTable.resx">
       <DependentUpon>201902081026551_addCustomerEmailToOrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902170808540_RenameIdentityTables.resx">
+      <DependentUpon>201902170808540_RenameIdentityTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902170859006_addGroupTable.resx">
+      <DependentUpon>201902170859006_addGroupTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SampleData.resx">
       <Generator>ResXFileCodeGenerator</Generator>

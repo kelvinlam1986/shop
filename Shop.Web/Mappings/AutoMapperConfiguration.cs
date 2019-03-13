@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Shop.Model.Models;
 using Shop.Web.Models;
-using System.Collections.Generic;
 
 namespace Shop.Web.Mappings
 {
@@ -22,6 +21,7 @@ namespace Shop.Web.Mappings
                         cfg.CreateMap<Slide, SlideViewModel>();
                         cfg.CreateMap<Page, PageViewModel>();
                         cfg.CreateMap<ContactDetail, ContactDetailViewModel>();
+                        cfg.CreateMap<ApplicationGroup, ApplicationGroupViewModel>();
                     }
                 );
 

@@ -69,11 +69,6 @@ namespace Shop.Web.Api
             });
         }
 
-        private HttpResponseMessage CreateHttpResponse(HttpRequestMessage request, Func<HttpResponseMessage> p)
-        {
-            throw new NotImplementedException();
-        }
-
         [Route("update")]
         public HttpResponseMessage Put(HttpRequestMessage request, PostCategoryViewModel postCategoryVM)
         {

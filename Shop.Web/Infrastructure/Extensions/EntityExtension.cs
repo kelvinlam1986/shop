@@ -115,5 +115,11 @@ namespace Shop.Web.Infrastructure.Extensions
             order.CreatedBy = orderVm.CreatedBy;
             order.CustomerId = orderVm.CustomerId;
         }
+
+        public static void UpdateApplicationGroup(this ApplicationGroup applicationGroup, ApplicationGroupViewModel applicationGroupVm)
+        {
+            applicationGroup.Name = applicationGroupVm.Name;
+            applicationGroup.Description = applicationGroupVm.Description;
+        }
     }
 }
