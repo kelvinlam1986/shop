@@ -42,7 +42,7 @@ namespace Shop.Service
         {
             if (this._applicationGroupRepository.CheckContains(x => x.Name == group.Name))
             {
-                throw new Exception("Tên không được trùng.");
+                throw new NameDuplicatedException("Tên không được trùng.");
             }
 
             return this._applicationGroupRepository.Add(group);

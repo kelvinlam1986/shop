@@ -7,8 +7,10 @@ using Shop.Web.Infrastructure.Extensions;
 using Shop.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 
@@ -20,16 +22,19 @@ namespace Shop.Web.Api
     {
         private IApplicationGroupService _applicationGroupService;
         private IApplicationRoleServie _applicationRoleService;
+        private ApplicationUserManager _applicationUserManager;
 
         public ApplicationGroupController(
             IErrorService errorService, 
             IApplicationGroupService applicationGroupService, 
             IApplicationRoleServie applicationRoleService,
+            ApplicationUserManager applicationUserManager,
             IMapper mapper) 
             : base(errorService, mapper)
         {
             this._applicationGroupService = applicationGroupService;
             this._applicationRoleService = applicationRoleService;
+            this._applicationUserManager = applicationUserManager;
         }
 
         [Route("getlistpaging")]
@@ -78,7 +83,14 @@ namespace Shop.Web.Api
             {
                 HttpResponseMessage response = null;
                 var applicationGroup = _applicationGroupService.GetDetail(id);
+                if (applicationGroup == null)
+                {
+                    return request.CreateErrorResponse(HttpStatusCode.NoContent, "No group");
+                }
+
+                var listRole = _applicationRoleService.GetListRoleByGroupId(applicationGroup.ID);
                 var applicationGroupVM = Mapper.Map<ApplicationGroup, ApplicationGroupViewModel>(applicationGroup);
+                applicationGroupVM.Roles = Mapper.Map<IEnumerable<ApplicationRole>, IEnumerable<ApplicationRoleViewModel>>(listRole);
                 response = request.CreateResponse(HttpStatusCode.OK, applicationGroupVM);
                 return response;
             });
@@ -131,8 +143,6 @@ namespace Shop.Web.Api
                 try
                 {
                     var applicationGroup = this._applicationGroupService.Add(newApplicationGroup);
-                    this._applicationGroupService.Save();
-
                     var listRoleGroup = new List<ApplicationRoleGroup>();
                     foreach (var role in applicationGroupViewModel.Roles)
                     {
@@ -160,25 +170,56 @@ namespace Shop.Web.Api
         }
 
         [Route("update")]
-        public HttpResponseMessage Put(HttpRequestMessage request, ApplicationGroupViewModel applicationGroupViewModel)
+        public async Task<HttpResponseMessage> Put(HttpRequestMessage request, ApplicationGroupViewModel applicationGroupViewModel)
         {
-            return CreateHttpResponse(request, () =>
+            HttpResponseMessage response = null;
+            if (!ModelState.IsValid)
             {
-                HttpResponseMessage response = null;
-                if (!ModelState.IsValid)
+                request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+            else
+            {
+                var applicationGroupDb = _applicationGroupService.GetDetail(applicationGroupViewModel.ID);
+                try
                 {
-                    request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-                }
-                else
-                {
-                    var applicationGroupDb = _applicationGroupService.GetDetail(applicationGroupViewModel.ID);
                     applicationGroupDb.UpdateApplicationGroup(applicationGroupViewModel);
                     _applicationGroupService.Update(applicationGroupDb);
-                    _applicationGroupService.Save();
+
+                    var listRoleGroup = new List<ApplicationRoleGroup>();
+                    foreach (var item in applicationGroupViewModel.Roles)
+                    {
+                        listRoleGroup.Add(new ApplicationRoleGroup
+                        {
+                            GroupId = applicationGroupDb.ID,
+                            RoleId = item.Id
+                        });
+                    }
+
+                    _applicationRoleService.AddRolesToGroup(listRoleGroup, applicationGroupDb.ID);
+                    _applicationRoleService.Save();
+
+                    var listRole = _applicationRoleService.GetListRoleByGroupId(applicationGroupDb.ID);
+                    var listUserInGroup = _applicationGroupService.GetListUserByGroupId(applicationGroupDb.ID);
+                    foreach (var user in listUserInGroup)
+                    {
+                        var listRoleName = listRole.Select(x => x.Name).ToArray();
+                        foreach (var roleName in listRoleName)
+                        {
+                            await this._applicationUserManager.RemoveFromRoleAsync(user.Id, roleName);
+                            await this._applicationUserManager.AddToRoleAsync(user.Id, roleName);
+                        }
+                    }
+
                     response = request.CreateResponse(HttpStatusCode.OK);
                 }
-                return response;
-            });
+                catch (NameDuplicatedException nameDuplicatedException)
+                {
+                   response = request.CreateErrorResponse(HttpStatusCode.BadRequest, nameDuplicatedException.Message);
+                }
+
+            }
+
+            return response;
         }
     }
 }

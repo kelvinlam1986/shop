@@ -21,10 +21,19 @@
                     notificationService.displaySuccess($scope.applicationGroup.Name + ' đã được cập nhật thành công.');
                     $state.go('application_groups');
                 }, function (err) {
-                    notificationService.displayError('Cập nhật không thành công.')
+                    notificationService.displayError(err.data.Message)
                 });
         }
 
+        function loadRoles() {
+            apiService.get('/api/applicationrole/getlistall', null, function (response) {
+                $scope.roles = response.data;
+            }, function (err) {
+                notificationService.displayError('Không tải được danh sách quyền');
+            });
+        }
+
+        loadRoles();
         loadApplicationGroupDetail();
     }
 })(angular.module('shop.application_groups'));

@@ -15,7 +15,8 @@
                     notificationService.displaySuccess($scope.applicationGroup.Name + ' đã được thêm thành công.');
                     $state.go('application_groups');
                 }, function (err) {
-                    notificationService.displayError('Thêm mới không thành công.')
+                    console.log('err', err);
+                    notificationService.displayError(err.data.Message)
                 });
         }
 
