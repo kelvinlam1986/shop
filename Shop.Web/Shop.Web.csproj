@@ -243,6 +243,7 @@
   <ItemGroup>
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\ApplicationGroupController.cs" />
+    <Compile Include="Api\ApplicationRoleController.cs" />
     <Compile Include="Api\HomeController.cs" />
     <Compile Include="Api\PostCategoryController.cs" />
     <Compile Include="Api\ProductCategoryController.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Infrastructure\Extensions\EntityExtension.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Models\ApplicationGroupViewModel.cs" />
+    <Compile Include="Models\ApplicationRoleViewModel.cs" />
     <Compile Include="Models\ContactDetailViewModel.cs" />
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\FooterViewModel.cs" />
@@ -460,6 +462,8 @@
     <Content Include="Assets\admin\libs\bootstrap\js\tooltip.js" />
     <Content Include="Assets\admin\libs\bootstrap\js\transition.js" />
     <Content Include="Assets\admin\libs\bootstrap\package.js" />
+    <Content Include="Assets\admin\libs\checklist-model\checklist-model.js" />
+    <Content Include="Assets\admin\libs\checklist-model\LICENSE.txt" />
     <Content Include="Assets\admin\libs\ckeditor\adapters\jquery.js" />
     <Content Include="Assets\admin\libs\ckeditor\ckeditor.js" />
     <Content Include="Assets\admin\libs\ckeditor\config.js" />
@@ -6505,6 +6509,7 @@
     <Folder Include="app\shared\footer\" />
     <Folder Include="app\shared\navigation\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\admin\libs\checklist-model\test\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\About\" />
     <Folder Include="Views\Post\" />
@@ -7003,6 +7008,11 @@
     <Content Include="Assets\admin\libs\jquery-validation\README.md" />
     <Content Include="Assets\admin\libs\jquery-validation\src\localization\messages_az" />
     <Content Include="Assets\admin\libs\jquery-validation\validation.jquery.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\admin\libs\checklist-model\.bower.json" />
+    <Content Include="Assets\admin\libs\checklist-model\bower.json" />
+    <Content Include="Assets\admin\libs\checklist-model\readme.md" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

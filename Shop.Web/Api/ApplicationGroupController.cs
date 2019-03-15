@@ -19,11 +19,17 @@ namespace Shop.Web.Api
     public class ApplicationGroupController : ApiControllerBase
     {
         private IApplicationGroupService _applicationGroupService;
+        private IApplicationRoleServie _applicationRoleService;
 
-        public ApplicationGroupController(IErrorService errorService, IApplicationGroupService applicationGroupService, IMapper mapper) 
+        public ApplicationGroupController(
+            IErrorService errorService, 
+            IApplicationGroupService applicationGroupService, 
+            IApplicationRoleServie applicationRoleService,
+            IMapper mapper) 
             : base(errorService, mapper)
         {
             this._applicationGroupService = applicationGroupService;
+            this._applicationRoleService = applicationRoleService;
         }
 
         [Route("getlistpaging")]
@@ -126,6 +132,19 @@ namespace Shop.Web.Api
                 {
                     var applicationGroup = this._applicationGroupService.Add(newApplicationGroup);
                     this._applicationGroupService.Save();
+
+                    var listRoleGroup = new List<ApplicationRoleGroup>();
+                    foreach (var role in applicationGroupViewModel.Roles)
+                    {
+                        listRoleGroup.Add(new ApplicationRoleGroup
+                        {
+                            GroupId = applicationGroup.ID,
+                            RoleId = role.Id
+                        });
+                    }
+
+                    this._applicationRoleService.AddRolesToGroup(listRoleGroup, applicationGroup.ID);
+                    this._applicationRoleService.Save();
 
                     return request.CreateResponse(HttpStatusCode.OK, applicationGroupViewModel);
                 }

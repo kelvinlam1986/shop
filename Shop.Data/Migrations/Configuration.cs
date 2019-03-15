@@ -46,8 +46,8 @@
 
                 if (!roleManager.Roles.Any())
                 {
-                    roleManager.Create(new IdentityRole("User"));
-                    roleManager.Create(new IdentityRole("Admin"));
+                    roleManager.Create(new ApplicationRole("User"));
+                    roleManager.Create(new ApplicationRole("Admin"));
 
                     var adminUser = userManager.FindByEmail("kelvincoder@gmail.com");
                     userManager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });

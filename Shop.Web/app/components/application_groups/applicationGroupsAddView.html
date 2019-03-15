@@ -1,7 +1,7 @@
 ﻿ <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Thêm mới loại sản phẩm
+        Thêm mới nhóm người dùng
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
@@ -26,7 +26,7 @@
                     <div class="col-sm-10">
                         <input type="text" required ng-maxlength="256" class="form-control" name="name" ng-model="applicationGroup.Name" id="inputName" placeholder="Tên danh mục">
                         <span ng-show="frmAddApplicationGroup.name.$invalid && frmAddApplicationGroup.name.$dirty" class="has-error">
-                            <span ng-show="frmAddApplicationGroup.name.$error.required">Phải nhập tên danh mục</span>
+                            <span ng-show="frmAddApplicationGroup.name.$error.required">Phải nhập tên nhóm</span>
                             <span ng-show="frmAddApplicationGroup.name.$error.maxlength">Tên danh mục không được vượt quá 256 ký tự</span>
                         </span>
                     </div>
@@ -39,6 +39,14 @@
                             <span ng-show="frmAddApplicationGroup.description.$error.maxlength">Mô tả không được vượt quá 500 ký tự</span>
                         </span>
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <label ng-repeat="role in roles">
+                            <input type="checkbox" checklist-model="applicationGroup.Roles" checklist-value="role" /> {{role.Name}} &nbsp;
+                        </label>
+                    </div>
+
                 </div>
             </div>
             <!-- /.box-body -->
