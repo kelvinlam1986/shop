@@ -121,5 +121,15 @@ namespace Shop.Web.Infrastructure.Extensions
             applicationGroup.Name = applicationGroupVm.Name;
             applicationGroup.Description = applicationGroupVm.Description;
         }
+
+        public static void UpdateUser(this ApplicationUser applicationUser, ApplicationUserViewModel applicationUserVm)
+        {
+            applicationUser.Id = applicationUserVm.Id;
+            applicationUser.FullName = applicationUserVm.FullName;
+            applicationUser.BirthDate = applicationUserVm.BirthDate;
+            applicationUser.Email = applicationUserVm.Email;
+            applicationUser.UserName = applicationUserVm.UserName;
+            applicationUser.PhoneNumber = applicationUserVm.PhoneNumber;
+        }
     }
 }

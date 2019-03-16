@@ -4,9 +4,9 @@
         Thêm mới người dùng
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><i class="fa fa-dashboard"></i> Trang chủ</li>
         <li>Người dùng</li>
-        <li><a ui-sref="application_groups">Danh mục người dùng</a></li>
+        <li><a ui-sref="application_users">Danh mục người dùng</a></li>
         <li class="active">Thêm mới</li>
     </ol>
 </section>
@@ -21,25 +21,68 @@
         <!-- form start -->
         <form class="form-horizontal" novalidate name="frmAddApplicationUser" role="form" ng-submit="addApplicationUser()">
             <div class="box-body">
-                <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Tên đăng nhập</label>
+                <div class="form-group" 
+                     ng-class="{ 'has-error' : frmAddApplicationUser.name.$invalid && !frmAddApplicationUser.name.$pristine }">
+                    <label for="inputName" class="col-sm-2 control-label">Họ và tên người dùng</label>
                     <div class="col-sm-10">
-                        <input type="text" required ng-maxlength="256" class="form-control" name="name" 
-                               ng-model="applicationUser.Name" id="inputName" placeholder="Tên đăng nhập">
-                        <span ng-show="frmAddApplicationUser.name.$invalid && frmAddApplicationUser.name.$dirty" class="has-error">
-                            <span ng-show="frmAddApplicationUser.name.$error.required">Phải nhập tên đăng nhập</span>
-                            <span ng-show="frmAddApplicationUser.name.$error.maxlength">Tên đăng nhập không được vượt quá 256 ký tự</span>
-                        </span>
+                        <input type="text" required required-message="Họ và tên bắt buột" class="form-control" name="name" 
+                               ng-model="applicationUser.FullName" id="inputName" placeholder="Họ và tên">
+                        <span ng-message="required" class="help-block"
+                             ng-if="frmAddApplicationUser.name.$invalid && !frmAddApplicationUser.name.$pristine">Họ và tên bắt buột</span>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' : frmAddApplicationUser.userName.$invalid && !frmAddApplicationUser.userName.$pristine }">
+                    <label for="inputName" class="col-sm-2 control-label">Tài khoản</label>
+                    <div class="col-sm-10">
+                        <input type="text" required required-message="Tài khoản bắt buột" class="form-control" name="userName"
+                               ng-model="applicationUser.UserName" id="inputUserName" placeholder="Tài khoản">
+                        <span ng-message="required" class="help-block"
+                              ng-if="frmAddApplicationUser.userName.$invalid && !frmAddApplicationUser.userName.$pristine">Tài khoản bắt buột</span>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' : frmAddApplicationUser.password.$invalid && !frmAddApplicationUser.password.$pristine }">
+                    <label for="inputPassword" class="col-sm-2 control-label">Mật khẩu</label>
+                    <div class="col-sm-10">
+                        <input type="password" required required-message="Mật khẩu bắt buột" class="form-control" name="password"
+                               ng-model="applicationUser.Password" id="inputPassword" placeholder="Mật khẩu">
+                        <span ng-message="required" class="help-block"
+                              ng-if="frmAddApplicationUser.password.$invalid && !frmAddApplicationUser.password.$pristine">Mật khẩu bắt buột</span>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' : frmAddApplicationUser.email.$invalid && !frmAddApplicationUser.email.$pristine }">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" required required-message="Email bắt buột" class="form-control" name="email"
+                               ng-model="applicationUser.Email" id="inputEmail" placeholder="Email">
+                        <span ng-message="required" class="help-block"
+                              ng-if="frmAddApplicationUser.email.$invalid && !frmAddApplicationUser.email.$pristine">Email bắt buột</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputDescription" class="col-sm-2 control-label">Mô tả</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">Điệh thoại</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-maxlength="500" 
-                               ng-model="applicationUser.Description" name="description" id="inputDescription" placeholder="Mô tả">
-                        <span ng-show="frmAddApplicationUser.description.$invalid && frmAddApplicationUser.description.$dirty" class="has-error">
-                            <span ng-show="frmAddApplicationUser.description.$error.maxlength">Mô tả không được vượt quá 500 ký tự</span>
-                        </span>
+                        <input type="tel" class="form-control" name="phoneNumber"
+                               ng-model="applicationUser.PhoneNumber" id="inputPhoneNumber" placeholder="Điện thoại">
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' : frmAddApplicationUser.birthDate.$invalid && !frmAddApplicationUser.birthDate.$pristine }">
+                    <label for="inputBirthDate" class="col-sm-2 control-label">Ngày sinh</label>
+                    <div class="col-sm-10">
+                        <input type="date" required required-message="Ngày sinh bắt buột" class="form-control" name="birthDate"
+                               ng-model="applicationUser.BirthDate" id="inputBirthDate" placeholder="Ngày sinh">
+                        <span ng-message="required" class="help-block"
+                              ng-if="frmAddApplicationUser.birthDate.$invalid && !frmAddApplicationUser.birthDate.$pristine">Ngày sinh bắt buột</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <label ng-repeat="group in groups">
+                            <input type="checkbox" checklist-model="applicationUser.Groups" checklist-value="group" /> {{group.Name}} &nbsp;
+                        </label>
                     </div>
                 </div>
             </div>
