@@ -302,6 +302,13 @@
     <Content Include="app\components\application_groups\applicationGroupsEditView.html" />
     <Content Include="app\components\application_groups\applicationGroupsListController.js" />
     <Content Include="app\components\application_groups\applicationGroupsListView.html" />
+    <Content Include="app\components\application_roles\applicationRoles.module.js" />
+    <Content Include="app\components\application_roles\applicationRolesAddController.js" />
+    <Content Include="app\components\application_roles\applicationRolesAddView.html" />
+    <Content Include="app\components\application_roles\applicationRolesEditController.js" />
+    <Content Include="app\components\application_roles\applicationRolesEditView.html" />
+    <Content Include="app\components\application_roles\applicationRolesListController.js" />
+    <Content Include="app\components\application_roles\applicationRolesListView.html" />
     <Content Include="app\components\home\homeController.js" />
     <Content Include="app\components\home\homeView.html" />
     <Content Include="app\components\home\rootController.js" />

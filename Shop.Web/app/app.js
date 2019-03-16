@@ -3,6 +3,7 @@
         ['shop.product_categories',
          'shop.products',
          'shop.application_groups',
+         'shop.application_roles',
          'shop.common'])
         .config(config)
         .config(configAuthentication);

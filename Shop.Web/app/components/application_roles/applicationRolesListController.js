@@ -1,13 +1,17 @@
-﻿(function (app) {
-    app.controller('applicationGroupsListController', applicationGroupsListController);
-    applicationGroupsListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter']
-    function applicationGroupsListController($scope, apiService, notificationService, $ngBootbox, $filter) {
+﻿/// <reference path="D:\Shop\Git\Shop.Web\Assets/admin/libs/angular/angular.js" />
+
+/// <reference path="D:\Shop\Git\Shop.Web\Assets/admin/libs/angular/angular.js" />
+
+(function (app) {
+    app.controller('applicationRolesListController', applicationRolesListController);
+    applicationRolesListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter']
+    function applicationRolesListController($scope, apiService, notificationService, $ngBootbox, $filter) {
         $scope.loading = true;
-        $scope.applicationGroups = [];
+        $scope.applicationRoles = [];
         $scope.page = 0;
         $scope.pagesCount = 0;
         $scope.keyword = '';
-        $scope.getApplicationGroups = getApplicationGroups;
+        $scope.getApplicationRoles = getApplicationRoles;
         $scope.search = search;
         $scope.deleteItem = deleteItem;
         $scope.selectAll = selectAll;
@@ -26,7 +30,7 @@
                         checkedList: JSON.stringify(listId)
                     }
                 }
-                apiService.del('/api/applicationgroup/deletemulti', config, function (result) {
+                apiService.del('/api/applicationrole/deletemulti', config, function (result) {
                     notificationService.displaySuccess('Xóa thành công ' + result.data + ' bảng ghi.');
                     search();
                 }, function (err) {
@@ -37,19 +41,19 @@
 
         function selectAll() {
             if ($scope.isAll === false) {
-                angular.forEach($scope.applicationGroups, function (item) {
+                angular.forEach($scope.applicationRoles, function (item) {
                     item.checked = true;
                 });
                 $scope.isAll = true;
             } else {
-                angular.forEach($scope.applicationGroups, function (item) {
+                angular.forEach($scope.applicationRoles, function (item) {
                     item.checked = false;
                 });
                 $scope.isAll = false;
             }
         }
 
-        $scope.$watch('applicationGroups', function (n, o) {
+        $scope.$watch('applicationRoles', function (n, o) {
             var checked = $filter("filter")(n, { checked: true });
             if (checked.length) {
                 $scope.selected = checked;
@@ -67,7 +71,7 @@
                     }
                 }
 
-                apiService.del('/api/applicationgroup/delete', config, function (result) {
+                apiService.del('/api/applicationrole/delete', config, function (result) {
                     notificationService.displaySuccess('Xóa thành công.');
                     search();
                 }, function () {
@@ -78,10 +82,10 @@
         }
 
         function search() {
-            getApplicationGroups();
+            getApplicationRoles();
         }
 
-        function getApplicationGroups(page) {
+        function getApplicationRoles(page) {
             page = page || 0;
             var config = {
                 params: {
@@ -90,12 +94,12 @@
                     pageSize: 10
                 }
             }
-            apiService.get('/api/applicationgroup/getlistpaging', config, function (result) {
+            apiService.get('/api/applicationrole/getlistpaging', config, function (result) {
                 if (result.data.TotalCount == 0) {
                     notificationService.displaySuccess('Không có bảng ghi nào được tìm thấy');
                 }
 
-                $scope.applicationGroups = result.data.Items;
+                $scope.applicationRoles = result.data.Items;
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;
                 $scope.totalCount = result.data.TotalCount;
@@ -105,6 +109,7 @@
             })
         }
 
-        $scope.getApplicationGroups();
+        $scope.getApplicationRoles();
     }
-})(angular.module('shop.application_groups'));
+})(angular.module('shop.application_roles'));
+
