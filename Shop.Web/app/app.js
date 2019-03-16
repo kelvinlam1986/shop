@@ -4,6 +4,7 @@
          'shop.products',
          'shop.application_groups',
          'shop.application_roles',
+         'shop.application_users',
          'shop.common'])
         .config(config)
         .config(configAuthentication);

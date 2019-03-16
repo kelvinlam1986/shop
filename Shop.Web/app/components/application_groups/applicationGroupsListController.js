@@ -83,6 +83,7 @@
 
         function getApplicationGroups(page) {
             page = page || 0;
+            $scope.loading = true;
             var config = {
                 params: {
                     filter: $scope.keyword,
@@ -102,6 +103,7 @@
                 $scope.loading = false;
             }, function (error) {
                 notificationService.displayError(error.data)
+                $scope.loading = false;
             })
         }
 

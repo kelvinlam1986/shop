@@ -11,9 +11,11 @@
         $scope.getProducts = getProducts;
         $scope.search = search;
         $scope.deleteProduct = deleteProduct;
+        $scope.loading = false;
 
         function getProducts(page) {
             page = page || 0;
+            $scope.loading = true;
             var config = {
                 params: {
                     keyword: $scope.keyword,
@@ -30,8 +32,10 @@
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;
                 $scope.totalCount = result.data.TotalCount;
+                $scope.loading = false;
             }, function (error) {
                 console.log('Load product failed.', error);
+                $scope.loading = false;
             })
         }
 

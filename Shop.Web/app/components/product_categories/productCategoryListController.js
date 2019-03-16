@@ -14,6 +14,7 @@
         $scope.selectAll = selectAll;
         $scope.isAll = false;
         $scope.deleteMultiple = deleteMultiple;
+        $scope.loading = false;
 
         function deleteMultiple() {
             $ngBootbox.confirm('Bạn có chắc muốn xóa ?').then(function () {
@@ -84,6 +85,7 @@
 
         function getProductCategories(page) {
             page = page || 0;
+            $scope.loading = true;
             var config = {
                 params: {
                     keyword: $scope.keyword,
@@ -100,8 +102,10 @@
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;
                 $scope.totalCount = result.data.TotalCount;
+                $scope.loading = false;
             }, function (error) {
                 console.log('Load product categories failed.', error);
+                $scope.loading = false;
             })
         }
 

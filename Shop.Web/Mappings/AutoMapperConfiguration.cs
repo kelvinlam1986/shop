@@ -23,6 +23,7 @@ namespace Shop.Web.Mappings
                         cfg.CreateMap<ContactDetail, ContactDetailViewModel>();
                         cfg.CreateMap<ApplicationGroup, ApplicationGroupViewModel>();
                         cfg.CreateMap<ApplicationRole, ApplicationRoleViewModel>();
+                        cfg.CreateMap<ApplicationUser, ApplicationUserViewModel>();
                     }
                 );
 
