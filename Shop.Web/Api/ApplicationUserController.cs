@@ -112,5 +112,80 @@ namespace Shop.Web.Api
                 return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
+
+        [Route("getbyid/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(HttpRequestMessage request, string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, nameof(id) + " không có giá trị.");
+            }
+
+            var user = this._applicationUserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.NoContent, "Không có dữ liệu");
+            }
+            else
+            {
+                var applicationUserViewModel = Mapper.Map<ApplicationUser, ApplicationUserViewModel>(user.Result);
+                var listGroup = this._applicationGroupService.GetListGroupByUserId(applicationUserViewModel.Id);
+                applicationUserViewModel.Groups = 
+                    Mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupViewModel>>(listGroup);
+                return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+
+            }
+        }
+
+        [Route("update")]
+        public async Task<HttpResponseMessage> Put(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
+        {
+            HttpResponseMessage response = null;
+            if (!ModelState.IsValid)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+            else
+            {
+                var applicationUser = await this._applicationUserManager.FindByIdAsync(applicationUserViewModel.Id);
+                try
+                {
+                    applicationUser.UpdateUser(applicationUserViewModel);
+                    var result = await this._applicationUserManager.UpdateAsync(applicationUser);
+                    if (result.Succeeded)
+                    {
+                        var listUserGroup = new List<ApplicationUserGroup>();
+                        foreach (var group in applicationUserViewModel.Groups)
+                        {
+                            listUserGroup.Add(new ApplicationUserGroup
+                            {
+                                GroupId = group.ID,
+                                UserId = applicationUserViewModel.Id
+                            });
+
+                            var listRole = this._applicationRoleService.GetListRoleByGroupId(group.ID);
+                            foreach (var role in listRole)
+                            {
+                                await this._applicationUserManager.RemoveFromRoleAsync(applicationUser.Id, role.Name);
+                                await this._applicationUserManager.AddToRoleAsync(applicationUser.Id, role.Name);
+                            }
+                        }
+
+                        this._applicationGroupService.AddUserToGroups(listUserGroup, applicationUserViewModel.Id);
+                        this._applicationGroupService.Save();
+                        return request.CreateResponse(HttpStatusCode.OK, applicationUserViewModel);
+                    }
+                    else
+                    {
+                        return request.CreateErrorResponse(HttpStatusCode.BadRequest, string.Join(",", result.Errors));
+                    }
+                }
+                catch (NameDuplicatedException nameDuplicatedException)
+                {
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, nameDuplicatedException.Message);
+                }
+            }
+        }
     }
 }
