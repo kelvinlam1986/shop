@@ -141,7 +141,6 @@ namespace Shop.Web.Api
         [Route("update")]
         public async Task<HttpResponseMessage> Put(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
-            HttpResponseMessage response = null;
             if (!ModelState.IsValid)
             {
                 return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
@@ -186,6 +185,18 @@ namespace Shop.Web.Api
                     return request.CreateErrorResponse(HttpStatusCode.BadRequest, nameDuplicatedException.Message);
                 }
             }
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<HttpResponseMessage> Delete(HttpRequestMessage request, string id)
+        {
+            var appUser = await this._applicationUserManager.FindByIdAsync(id);
+            var result = await this._applicationUserManager.DeleteAsync(appUser);
+            if (result.Succeeded)
+                return request.CreateResponse(HttpStatusCode.OK, id);
+            else
+                return request.CreateErrorResponse(HttpStatusCode.OK, string.Join(",", result.Errors));
         }
     }
 }
