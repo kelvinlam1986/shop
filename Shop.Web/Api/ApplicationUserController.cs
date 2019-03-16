@@ -45,6 +45,12 @@ namespace Shop.Web.Api
                 HttpResponseMessage response = null;
                 int totalRow = 0;
                 var model = this._applicationUserManager.Users;
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    model = model.Where(x => x.FullName.Contains(filter) ||
+                                x.UserName.Contains(filter) ||
+                                x.Email.Contains(filter));
+                }
                 IEnumerable<ApplicationUserViewModel> modelVm =
                     Mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserViewModel>>(model);
                 totalRow = modelVm.Count();

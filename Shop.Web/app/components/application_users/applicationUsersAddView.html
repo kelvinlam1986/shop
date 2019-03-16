@@ -72,8 +72,8 @@
                      ng-class="{ 'has-error' : frmAddApplicationUser.birthDate.$invalid && !frmAddApplicationUser.birthDate.$pristine }">
                     <label for="inputBirthDate" class="col-sm-2 control-label">Ngày sinh</label>
                     <div class="col-sm-10">
-                        <input type="date" required required-message="Ngày sinh bắt buột" class="form-control" name="birthDate"
-                               ng-model="applicationUser.BirthDate" id="inputBirthDate" placeholder="Ngày sinh">
+                        <input type="text" as-date required required-message="Ngày sinh bắt buột" class="form-control" name="birthDate"
+                               ng-model="applicationUser.BirthDate" id="datepicker" placeholder="Ngày sinh" date="dd/MM/yyyy">
                         <span ng-message="required" class="help-block"
                               ng-if="frmAddApplicationUser.birthDate.$invalid && !frmAddApplicationUser.birthDate.$pristine">Ngày sinh bắt buột</span>
                     </div>
@@ -97,3 +97,10 @@
     <!-- /.box -->
 </section>
 <!-- /.content -->
+
+<script>
+    $('#datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        autoClose: true
+    });
+</script>
