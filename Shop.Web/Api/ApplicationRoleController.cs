@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shop.Common;
 using Shop.Model.Models;
 using Shop.Service;
 using Shop.Web.Infrastructure.Core;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace Shop.Web.Api
 {
@@ -18,11 +20,115 @@ namespace Shop.Web.Api
         private IApplicationRoleServie _applicationRoleService;
 
         public ApplicationRoleController(
-            IApplicationRoleServie applicationRoleService, 
+            IApplicationRoleServie applicationRoleService,
             IErrorService errorService,
             IMapper mapper) : base(errorService, mapper)
         {
             this._applicationRoleService = applicationRoleService;
+        }
+
+        [Route("getbyid/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(HttpRequestMessage request, string id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                var applicationRole = _applicationRoleService.GetDetail(id);
+                var applicationRoleVM = Mapper.Map<ApplicationRole, ApplicationRoleViewModel>(applicationRole);
+                response = request.CreateResponse(HttpStatusCode.OK, applicationRoleVM);
+                return response;
+            });
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public HttpResponseMessage Create(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var newApplicationRole = new ApplicationRole();
+                    newApplicationRole.Name = applicationRoleViewModel.Name;
+                    newApplicationRole.Description = applicationRoleViewModel.Description;
+                    var applicationRole = this._applicationRoleService.Add(newApplicationRole);
+                    this._applicationRoleService.Save();
+
+                    return request.CreateResponse(HttpStatusCode.OK, applicationRoleViewModel);
+                }
+                catch (NameDuplicatedException dex)
+                {
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, dex.Message);
+                }
+            }
+            else
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+
+        [HttpPut]
+        [Route("update")]
+        public HttpResponseMessage Update(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var applicationRole = this._applicationRoleService.GetDetail(applicationRoleViewModel.Id);
+                try
+                {
+                    applicationRole.Name = applicationRoleViewModel.Name;
+                    applicationRole.Description = applicationRoleViewModel.Description;
+                    this._applicationRoleService.Update(applicationRole);
+                    this._applicationRoleService.Save();
+
+                    return request.CreateResponse(HttpStatusCode.OK, applicationRoleViewModel);
+                }
+                catch (NameDuplicatedException dex)
+                {
+                    return request.CreateErrorResponse(HttpStatusCode.BadRequest, dex.Message);
+                }
+            }
+            else
+            {
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public HttpResponseMessage Delete(HttpRequestMessage request, string id)
+        {
+            this._applicationRoleService.Delete(id);
+            this._applicationRoleService.Save();
+            return request.CreateResponse(HttpStatusCode.OK, id);
+        }
+
+        [Route("deletemulti")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedList)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var listItem = new JavaScriptSerializer().Deserialize<List<string>>(checkedList);
+                    foreach (var item in listItem)
+                    {
+                        this._applicationRoleService.Delete(item);
+                    }
+
+                    this._applicationRoleService.Save();
+                    response = request.CreateResponse(HttpStatusCode.OK, listItem.Count);
+                }
+
+                return response;
+            });
         }
 
         [Route("getlistpaging")]

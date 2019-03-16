@@ -22,7 +22,7 @@
             $ngBootbox.confirm('Bạn có chắc muốn xóa ?').then(function () {
                 var listId = [];
                 $.each($scope.selected, function (i, item) {
-                    listId.push(item.ID);
+                    listId.push(item.Id);
                 });
 
                 var config = {
