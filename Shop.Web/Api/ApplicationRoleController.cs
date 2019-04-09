@@ -43,6 +43,7 @@ namespace Shop.Web.Api
 
         [HttpPost]
         [Route("add")]
+        [Authorize(Roles = "AddRole")]
         public HttpResponseMessage Create(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
         {
             if (ModelState.IsValid)
@@ -70,6 +71,7 @@ namespace Shop.Web.Api
 
         [HttpPut]
         [Route("update")]
+        [Authorize(Roles = "UpdateRole")]
         public HttpResponseMessage Update(HttpRequestMessage request, ApplicationRoleViewModel applicationRoleViewModel)
         {
             if (ModelState.IsValid)
@@ -97,6 +99,7 @@ namespace Shop.Web.Api
 
         [HttpDelete]
         [Route("delete")]
+        [Authorize(Roles = "DeleteRole")]
         public HttpResponseMessage Delete(HttpRequestMessage request, string id)
         {
             this._applicationRoleService.Delete(id);
@@ -106,6 +109,7 @@ namespace Shop.Web.Api
 
         [Route("deletemulti")]
         [HttpDelete]
+        [Authorize(Roles = "DeleteRole")]
         public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedList)
         {
             return CreateHttpResponse(request, () =>

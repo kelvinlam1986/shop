@@ -69,6 +69,7 @@ namespace Shop.Web.Api
 
         [HttpPost]
         [Route("add")]
+        [Authorize(Roles = "AddUser")]
         public async Task<HttpResponseMessage> Create(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (ModelState.IsValid)
@@ -145,6 +146,7 @@ namespace Shop.Web.Api
         }
 
         [Route("update")]
+        [Authorize(Roles = "UpdateUser")]
         public async Task<HttpResponseMessage> Put(HttpRequestMessage request, ApplicationUserViewModel applicationUserViewModel)
         {
             if (!ModelState.IsValid)
@@ -195,6 +197,7 @@ namespace Shop.Web.Api
 
         [HttpDelete]
         [Route("delete")]
+        [Authorize(Roles = "DeleteUser")]
         public async Task<HttpResponseMessage> Delete(HttpRequestMessage request, string id)
         {
             var appUser = await this._applicationUserManager.FindByIdAsync(id);

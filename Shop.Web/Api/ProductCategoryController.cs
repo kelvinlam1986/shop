@@ -84,6 +84,7 @@ namespace Shop.Web.Api
 
         [Route("create")]
         [HttpPost]
+        [Authorize(Roles = "AddProductCategory")]
         public HttpResponseMessage Create(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
         {
             return CreateHttpResponse(request, () =>
@@ -113,6 +114,7 @@ namespace Shop.Web.Api
 
         [Route("update")]
         [HttpPut]
+        [Authorize(Roles = "UpdateProductCategory")]
         public HttpResponseMessage Update(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
         {
             return CreateHttpResponse(request, () =>
@@ -140,6 +142,7 @@ namespace Shop.Web.Api
 
         [Route("delete")]
         [HttpDelete]
+        [Authorize(Roles = "DeleteProductCategory")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             return CreateHttpResponse(request, () =>
@@ -163,6 +166,7 @@ namespace Shop.Web.Api
 
         [Route("deletemulti")]
         [HttpDelete]
+        [Authorize(Roles = "DeleteProductCategory")]
         public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string listId)
         {
             return CreateHttpResponse(request, () =>

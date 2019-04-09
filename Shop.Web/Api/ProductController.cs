@@ -55,6 +55,7 @@ namespace Shop.Web.Api
 
         [Route("delete")]
         [HttpDelete]
+        [Authorize(Roles = "DeleteProduct")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             return CreateHttpResponse(request, () =>
@@ -78,6 +79,7 @@ namespace Shop.Web.Api
 
         [Route("create")]
         [HttpPost]
+        [Authorize(Roles = "AddProduct")]
         public HttpResponseMessage Create(HttpRequestMessage request, ProductViewModel productVm)
         {
             return CreateHttpResponse(request, () =>
@@ -107,6 +109,7 @@ namespace Shop.Web.Api
 
         [Route("update")]
         [HttpPut]
+        [Authorize(Roles = "UpdateProduct")]
         public HttpResponseMessage Update(HttpRequestMessage request, ProductViewModel productVm)
         {
             return CreateHttpResponse(request, () =>

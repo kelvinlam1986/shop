@@ -98,6 +98,7 @@ namespace Shop.Web.Api
 
         [HttpDelete]
         [Route("delete")]
+        [Authorize(Roles = "DeleteGroupUser")]
         public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
             var appGroup = this._applicationGroupService.Delete(id);
@@ -107,6 +108,7 @@ namespace Shop.Web.Api
 
         [HttpDelete]
         [Route("deletemulti")]
+        [Authorize(Roles = "DeleteGroupUser")]
         public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedList)
         {
             return CreateHttpResponse(request, () =>
@@ -133,6 +135,7 @@ namespace Shop.Web.Api
 
         [HttpPost]
         [Route("add")]
+        [Authorize(Roles = "AddGroupUser")]
         public HttpResponseMessage Create(HttpRequestMessage request, ApplicationGroupViewModel applicationGroupViewModel)
         {
             if (ModelState.IsValid)
@@ -170,6 +173,7 @@ namespace Shop.Web.Api
         }
 
         [Route("update")]
+        [Authorize(Roles = "UpdateGroupUser")]
         public async Task<HttpResponseMessage> Put(HttpRequestMessage request, ApplicationGroupViewModel applicationGroupViewModel)
         {
             HttpResponseMessage response = null;
